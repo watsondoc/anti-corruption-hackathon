@@ -23,7 +23,7 @@ export const Layout = ({ children, title }: Props) => {
             </Box>
             <Box component="main" sx={{ py: 2 }}>
                 <Typography level='h1'>{title}</Typography>
-                <Box pt={2}>
+                <Box pt={2} display='flex' gap={2} flexDirection='column'>
                     {children}
                 </Box>
             </Box>
