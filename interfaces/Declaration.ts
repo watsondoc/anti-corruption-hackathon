@@ -88,6 +88,7 @@ export interface C_IncomeSection {
         c_1_1_reportingPeriodIncomes: c_1_1_ReportingPeriodIncome[],
         c_1_2_loanAndCreditBalances: c_1_2_LoanAndCreditBalance[]
     }
+    c_2_incomeAdditionalInformationJson: string;
 }
 
 // TBD

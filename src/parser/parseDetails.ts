@@ -215,10 +215,15 @@ function parseIncome(income: Content): C_IncomeSection {
     const loanAndCreditBalanceTable = revenuesGrid?.rows[1].cells[0].value as ValueClass;
     const c_1_2_loanAndCreditBalances = loanAndCreditBalanceTable?.rows ? parseLoanAndCreditBalance(loanAndCreditBalanceTable.rows) : [];
 
+    // c_2
+    const incomeAdditionalInformationGrid = grids.find(grid => grid.category === DeclarationCategory.c_2_IncomeAdditionalInformation);
+    const c_2_incomeAdditionalInformationJson = JSON.stringify(incomeAdditionalInformationGrid?.rows);
+
     return {
         c_1_revenues:{
             c_1_1_reportingPeriodIncomes,
             c_1_2_loanAndCreditBalances
-        }
+        },
+        c_2_incomeAdditionalInformationJson
     }
 }
