@@ -1,5 +1,5 @@
 import { DeclarationCategory } from "../../interfaces/DeclarationCategory";
-import { A_GeneralSection, B_PropertySection, C_IncomeSection, DeclarationDefails } from "../../interfaces/Declaration";
+import { A_GeneralSection, B_PropertySection, C_IncomeSection, D_InterestsSection, E_ExpenseSection } from "../../interfaces/Declaration";
 import { Content, Declaration, ValueClass } from "./originalInterfaces";
 import { parseDeclarationPersonInfo } from "../../seedData/sections/a_general/a_1_perfonInfo/a_1_DeclarationPersonInfo";
 import { a_2_DeclarantFamilyMember } from "../../seedData/sections/a_general/a_2_family/a_2_DeclarantFamilyMember";
@@ -20,15 +20,11 @@ import { parseLoanAndCreditBalance, parseReportingPeriodIncome } from "../../see
 
 export function parseDetails(details: Declaration): DeclarationDefails {
     const result: DeclarationDefails = {
-        name: details.name,
-        preHeader: null,
-        header: details.header,
-        general: parseGeneral(details.content[0]),
-        property: parseProperty(details.content[1]),
-        income: parseIncome(details.content[2]),
-        // income: parseIncome(details.content[2]),
+        generals: parseGeneral(details.content[0]),
+        properties: parseProperty(details.content[1]),
+        incomes: parseIncome(details.content[2]),
         interests: null,
-        expense: null
+        expenses: null
     }
 
     return result;
@@ -226,4 +222,13 @@ function parseIncome(income: Content): C_IncomeSection {
         },
         c_2_incomeAdditionalInformationJson
     }
+}
+
+
+export interface DeclarationDefails {
+    generals: A_GeneralSection;
+    properties: B_PropertySection;
+    incomes: C_IncomeSection;
+    interests: D_InterestsSection | null;
+    expenses: E_ExpenseSection | null;
 }

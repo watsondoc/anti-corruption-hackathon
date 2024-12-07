@@ -3,7 +3,7 @@ import { client } from '../db/mongoClient';
 import { Declaration } from '../../interfaces/Declaration';
 import * as path from 'path';
 import { parseDetails } from './parseDetails';
-const { chain } = require('stream-chain');
+import { chain } from 'stream-chain'
 const { parser } = require('stream-json');
 const { streamArray } = require('stream-json/streamers/StreamArray');
 
@@ -33,6 +33,7 @@ export class JSONToMongoParser {
   }
 
   async loadGeneralToMap(filePath: string) {
+
     try {
       // Read the JSON file
       const data: any = await this.readFileAsync(filePath);
@@ -55,6 +56,9 @@ export class JSONToMongoParser {
   }
 
   async loadDetailsInsert(jsonFilePath: string, generalMap: any): Promise<void> {
+
+    const declarations: any[] = [];
+
     try {
       console.log('Connected to MongoDB');
 
@@ -68,7 +72,7 @@ export class JSONToMongoParser {
           streamArray()
         ]);
 
-        // let count = 0;
+        let count = 0;
 
         pipeline.on('data', async (data: { key: number; value: any }) => {
           const item = data.value; // Parsed JSON object
@@ -76,7 +80,7 @@ export class JSONToMongoParser {
 
           const details = parseDetails(item);
 
-          const declaration = {
+          const declaration: Declaration = {
             id: item.id,
             name: declarant.name,
             declarant: declarant.declarant,
@@ -87,14 +91,24 @@ export class JSONToMongoParser {
             submissionDate: declarant.submissionDate,
             type: declarant.type,
             year: declarant.year,
-            defails: details
+            a_generals: details.generals,
+            b_properties: details.properties,
+            c_incomes: details.incomes,
+            d_interests: details.interests,
+            e_expenses: details.expenses
           }
 
           // fs.writeFileSync(path.join(__dirname, `${count++}.json`), JSON.stringify(declaration, null, 2));
 
+          if (count > 1000) {
+            pipeline.end();
+            return;
+          }
+
           try {
             // Insert the item into MongoDB
-            await collection.insertOne(item);
+            declarations.push(declaration);
+            // await collection.insertOne(declaration);
             console.log(`Inserted item with ID: ${item.id}`);
           } catch (err) {
             console.error(`Failed to insert item with ID: ${item.id}`, err);
@@ -102,8 +116,11 @@ export class JSONToMongoParser {
           }
         });
 
-        pipeline.on('end', () => {
+        pipeline.on('end', async () => {
           console.log('Finished processing file');
+          await collection.drop();
+          await collection.insertMany(declarations);
+
           client.close();
           resolve();
         });

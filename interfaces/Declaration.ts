@@ -28,18 +28,11 @@ export interface Declaration {
     submissionDate: string;
     type: string;
     year: number;
-    defails: DeclarationDefails;
-}
-
-export interface DeclarationDefails {
-    name: string;
-    preHeader: null;
-    header: string;
-    general: A_GeneralSection;
-    property: B_PropertySection;
-    income: C_IncomeSection;
-    interests: D_InterestsSection | null;
-    expense: E_ExpenseSection | null;
+    a_generals: A_GeneralSection;
+    b_properties: B_PropertySection;
+    c_incomes: C_IncomeSection;
+    d_interests: D_InterestsSection | null;
+    e_expenses: E_ExpenseSection | null;
 }
 
 export interface A_GeneralSection {
