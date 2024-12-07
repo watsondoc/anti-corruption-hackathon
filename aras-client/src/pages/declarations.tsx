@@ -4,10 +4,11 @@ import {
   getCoreRowModel,
   useReactTable,
 } from "@tanstack/react-table";
-import { Box, Input, Link, List, ListItem, Sheet, Typography } from "@mui/joy";
+import { Box, Card, CardContent, Input, Link, List, ListItem, Sheet, Typography } from "@mui/joy";
 import { Layout } from "../components/layout";
 import { ArasTable } from "../components/table";
 import { ArasSelect } from "../components/select";
+import { formatCurrency } from "../utils";
 
 interface Declaration {
   id: string;
@@ -96,13 +97,7 @@ const columns = [
   }),
   columnHelper.accessor("income", {
     header: "Income",
-    cell: (income) => {
-      const value = income.getValue();
-      return value.toLocaleString("en-US", {
-        style: "currency",
-        currency: "USD",
-      });
-    },
+    cell: (income) => formatCurrency(income.getValue())
   }),
 ];
 
@@ -129,17 +124,17 @@ export const DeclarationsPage = () => {
 
   return (
     <Layout title="Declarations">
-      <Sheet variant="outlined" sx={{ maxWidth: "50%" }}>
-        <Box py={2} px={4}>
-          <Typography level="title-md">Summary</Typography>
+      <Card sx={{ maxWidth: '300px' }}>
+        <Typography level="title-md">Summary</Typography>
+        <CardContent orientation="vertical">
           <List marker="disc">
             <ListItem>Number of records: 6</ListItem>
             <ListItem>Number of errors: 11</ListItem>
             <ListItem>Number of risk indicators: 23</ListItem>
           </List>
-        </Box>
-      </Sheet>
-      <Box mt={2} display="flex" gap={1} alignItems="end">
+        </CardContent>
+      </Card>
+      <Box mt={2} display="flex" gap={1} alignItems="end" flexWrap='wrap'>
         <Box flex="1 0 250px">
           <SearchInput />
         </Box>
@@ -150,9 +145,9 @@ export const DeclarationsPage = () => {
           <ArasSelect label="Department" options={departmentOptions} />
         </Box>
       </Box>
-      <Sheet variant="outlined">
+      <Card sx={{ p: 0 }}>
         <ArasTable table={table} />
-      </Sheet>
+      </Card>
     </Layout>
   );
 };

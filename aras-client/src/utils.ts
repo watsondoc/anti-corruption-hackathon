@@ -11,3 +11,10 @@ export const getRiskClass = (risk?: number): string | undefined => {
 
     return `danger-${riskType}`;
 };
+
+export const formatCurrency = (value: number | string): string => {
+    return value.toLocaleString("en-US", {
+        style: "currency",
+        currency: "USD",
+    });
+};
