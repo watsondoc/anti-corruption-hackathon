@@ -2,7 +2,7 @@ import { Route, Routes as RouterRoutes } from "react-router"
 
 import { MainPage } from "./main"
 import { DeclarationsPage } from "./declarations"
-import { DeclarationPage } from "./declaration"
+import { DeclarationPage } from "./declaration/declaration"
 import { RiskIndicatorsPage } from "./risk-indicators"
 
 export const Routes = () => {
