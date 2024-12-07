@@ -1,6 +1,6 @@
 import { Container, Box, Link, Typography, Breadcrumbs } from "@mui/joy";
 import { Link as RouterLink, useLocation } from "react-router";
-import reactSvg from "../assets/react.svg";
+import logo from "../assets/logo.svg";
 
 interface Props {
   title: string;
@@ -55,7 +55,7 @@ export const Layout = ({ children, title, breadcrumbs }: Props) => {
               cursor: isHome ? "default" : "pointer",
             }}
           >
-            <img src={reactSvg} alt="Logo of the system" />
+            <img src={logo} alt="Logo of the system" width='128px' height='64px' />
             <Typography ml={1} component="h1" level="title-lg">
               Automated Risk Analysis
             </Typography>
