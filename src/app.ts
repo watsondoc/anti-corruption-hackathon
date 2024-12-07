@@ -20,7 +20,10 @@ const startServer = async () => {
 
   const parser = new JSONToMongoParser('corruption', 'declarations');
 
-  await parser.parseAndInsert(path.resolve(__dirname, '../seedData/details_2024.json'));
+  await parser.loadDeclarations(
+    path.resolve(__dirname, '../seedData/general_2024.json'),
+    path.resolve(__dirname, '../seedData/details_2024.json'),
+  );
 
   app.listen(port, () => {
     console.log(`Server running on http://localhost:${port}`);
