@@ -9,9 +9,10 @@ export enum DeclarationCategory {
     b_5_ExpensiveProperty = "ExpensiveProperty",
     b_6_FinancialMeans = "FinancialMeans",
     b_7_PropertyAdditionalInformation ="PropertyAdditionalInformation",
+    // c
+    c_1_Revenues = "Revenues",
+    c_2_IncomeAdditionalInformation ="IncomeAdditionalInformation",
     // TBD
-    Revenues = "Revenues",
     Expenses = "Expenses",
-    IncomeAdditionalInformation ="IncomeAdditionalInformation",
     ExpensesAdditionalInformation = "ExpensesAdditionalInformation"
 }

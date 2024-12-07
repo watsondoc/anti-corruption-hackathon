@@ -1,0 +1,126 @@
+{
+  "type": "TABLE",
+  "title": "Գ.1.2.Ստացված վարկերի և փոխառությունների մայր գումարի մնացորդը պաշտոնի ստանձնման կամ դադարեցման օրվա դրությամբ",
+  "value": {
+    "headerItems": [
+      {
+        "name": "NN ը/կ",
+        "isNumbering": true,
+        "colSpan": 1
+      },
+      {
+        "name": "Եկամուտ ստացող հայտարարատուի անունը, ազգանունը, հայրանունը",
+        "isNumbering": false,
+        "colSpan": 1
+      },
+      {
+        "name": "Վարկատուի կամ փոխատուի անվանումը կամ անունը, ազգանունը և հայրանունը",
+        "isNumbering": false,
+        "colSpan": 1
+      },
+      {
+        "name": "Վարկատուի կամ փոխատուի հասցեն",
+        "isNumbering": false,
+        "colSpan": 1
+      },
+      {
+        "name": "Փոխառության մնացորդի չափը",
+        "isNumbering": false,
+        "colSpan": 1
+      },
+      {
+        "name": "Փոխառության տոկոսադրույքը",
+        "isNumbering": false,
+        "colSpan": 1
+      },
+      {
+        "name": "Փոխառության նպատակային նշանակությունը",
+        "isNumbering": false,
+        "colSpan": 1
+      },
+      {
+        "name": "Վարկի մայր գումարի մնացորդի չափը",
+        "isNumbering": false,
+        "colSpan": 1
+      },
+      {
+        "name": "Վարկի նպատակային նշանակությունը",
+        "isNumbering": false,
+        "colSpan": 1
+      },
+      {
+        "name": "Հիպոտեկի դեպքում՝ հիպոտեկի առարկան",
+        "isNumbering": false,
+        "colSpan": 1
+      },
+      {
+        "name": "Հիպոտեկի դեպքում՝ հիպոտեկի առարկայի գտնվելու վայրը",
+        "isNumbering": false,
+        "colSpan": 1
+      }
+    ],
+    "rows": [
+      [
+        "1.",
+        "Պաշտպանված",
+        "Պաշտպանված",
+        "Պաշտպանված",
+        "",
+        "",
+        "Պաշտպանված",
+        "֏ 4,200,000",
+        "Պաշտպանված",
+        "",
+        "Պաշտպանված"
+      ]
+    ],
+    "footerItems": [
+      {
+        "value": "Ընդամենը",
+        "colSpan": 2
+      },
+      {
+        "value": "",
+        "colSpan": 1
+      },
+      {
+        "value": "",
+        "colSpan": 1
+      },
+      {
+        "value": "",
+        "colSpan": 1
+      },
+      {
+        "value": "",
+        "colSpan": 1
+      },
+      {
+        "value": "",
+        "colSpan": 1
+      },
+      {
+        "value": "֏ 4,200,000",
+        "colSpan": 1
+      },
+      {
+        "value": "",
+        "colSpan": 1
+      },
+      {
+        "value": "",
+        "colSpan": 1
+      },
+      {
+        "value": "",
+        "colSpan": 1
+      }
+    ]
+  },
+  "properties": {
+    "type": "TABLE",
+    "xs": 12,
+    "s": 12,
+    "m": 12
+  }
+}

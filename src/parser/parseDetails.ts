@@ -16,6 +16,7 @@ import { b_3_4_DeclarantDebtSecuritiesThirdParty, parseDeclarantDebtSecuritiesTh
 import { b_4_1_DeclarantLoan, b_4_2_DeclarantThirdPartyLoan, b_4_3_BankDeposit, b_4_4_ThirdPartyBankDeposit, parseBankDeposits, parseDeclarantLoan, parseDeclarantThirdPartyLoan, parseThirdPartyBankDeposits } from "../../seedData/sections/b_propery/b_4_LoansAndDeposits";
 import { b_5_1_ValuableProperty, parseValuableProperties, b_5_2_DeclarantValuableProperty, parseDeclarantValuableProperties } from "../../seedData/sections/b_propery/b_5_ExpensiveProperty";
 import { b_6_1_BankAccountBalance, b_6_2_ThirdPartyBankAccountBalance, b_6_3_ElectronicAccountCrypto, b_6_4_ThirdPartyElectronicAccountCrypto, b_6_5_CashHoldings, b_6_6_CashHoldingsThirdParty, parseBankAccountBalances, parseCashHoldings, parseCashHoldingsThirdParty, parseElectronicAccountsAndCrypto, parseThirdPartyBankAccountBalances, parseThirdPartyElectronicAccountsAndCrypto } from "../../seedData/sections/b_propery/b_6_FinancialMeans";
+import { parseLoanAndCreditBalance, parseReportingPeriodIncome } from "../../seedData/sections/c_income/c_1_Revenues";
 
 export function parseDetails(details: Declaration): DeclarationDefails {
     const result: DeclarationDefails = {
@@ -24,7 +25,7 @@ export function parseDetails(details: Declaration): DeclarationDefails {
         header: details.header,
         general: parseGeneral(details.content[0]),
         property: parseProperty(details.content[1]),
-        income: null,
+        income: parseIncome(details.content[2]),
         // income: parseIncome(details.content[2]),
         interests: null,
         expense: null
@@ -200,6 +201,24 @@ function parseProperty(property: Content): B_PropertySection {
     }
 }
 
-function parseIncome(income: Content): C_IncomeSection | undefined {
-    return;
+function parseIncome(income: Content): C_IncomeSection {
+    const grids = income.grids;
+
+    // c_1
+    const revenuesGrid = grids.find(grid => grid.category === DeclarationCategory.c_1_Revenues);
+
+    // c_1_1
+    const reportingPeriodIncomeTable = revenuesGrid?.rows[0].cells[0].value as ValueClass;
+    const c_1_1_reportingPeriodIncomes = reportingPeriodIncomeTable?.rows ? parseReportingPeriodIncome(reportingPeriodIncomeTable.rows) : [];
+
+    // c_1_2
+    const loanAndCreditBalanceTable = revenuesGrid?.rows[1].cells[0].value as ValueClass;
+    const c_1_2_loanAndCreditBalances = loanAndCreditBalanceTable?.rows ? parseLoanAndCreditBalance(loanAndCreditBalanceTable.rows) : [];
+
+    return {
+        c_1_revenues:{
+            c_1_1_reportingPeriodIncomes,
+            c_1_2_loanAndCreditBalances
+        }
+    }
 }

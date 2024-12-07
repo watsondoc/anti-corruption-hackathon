@@ -15,6 +15,7 @@ import { b_4_2_DeclarantThirdPartyLoan } from "../seedData/sections/b_propery/b_
 import { b_4_3_BankDeposit } from "../seedData/sections/b_propery/b_4_LoansAndDeposits/b.4.3";
 import { b_4_4_ThirdPartyBankDeposit } from "../seedData/sections/b_propery/b_4_LoansAndDeposits/b.4.4";
 import { b_6_1_BankAccountBalance, b_6_2_ThirdPartyBankAccountBalance, b_6_3_ElectronicAccountCrypto, b_6_4_ThirdPartyElectronicAccountCrypto, b_6_5_CashHoldings, b_6_6_CashHoldingsThirdParty } from "../seedData/sections/b_propery/b_6_FinancialMeans";
+import { c_1_1_ReportingPeriodIncome, c_1_2_LoanAndCreditBalance } from "../seedData/sections/c_income/c_1_Revenues";
 
 export interface Declaration {
     id: string;
@@ -36,7 +37,7 @@ export interface DeclarationDefails {
     header: string;
     general: A_GeneralSection;
     property: B_PropertySection;
-    income: C_IncomeSection | null;
+    income: C_IncomeSection;
     interests: D_InterestsSection | null;
     expense: E_ExpenseSection | null;
 }
@@ -82,9 +83,11 @@ export interface B_PropertySection {
     }
 }
 
-// TBD
 export interface C_IncomeSection {
-
+    c_1_revenues: {
+        c_1_1_reportingPeriodIncomes: c_1_1_ReportingPeriodIncome[],
+        c_1_2_loanAndCreditBalances: c_1_2_LoanAndCreditBalance[]
+    }
 }
 
 // TBD
