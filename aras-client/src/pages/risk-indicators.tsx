@@ -119,21 +119,7 @@ export const RiskIndicatorsPage = () => {
     },
   });
 
-  const updateRiskIndicatorsMutation = useMutation({ mutationFn: async () => {
-    await new Promise((resolve) => setTimeout(resolve, 2000));
-    const updatedData = data.map(({ prevWeight, ...rest }) => {
-        return { ...rest };
-    });
-
-    riskIndicatorsQuery.remove();
-    riskIndicatorsQuery.refetch();
-    console.log('Updated data:', updatedData);
-  }});
-
-  useEffect(() => {
-    const fetchedData = riskIndicatorsQuery.data;
-    console.log('Fetched data:', fetchedData);
-
+  const updateState = (fetchedData: Omit<RiskIndicator, 'prevWeight'>[]) => {
     if (fetchedData) {
       const currentData = fetchedData.map(({ ...row }) => {
         return { ...row, prevWeight: row.weight };
@@ -147,6 +133,23 @@ export const RiskIndicatorsPage = () => {
       setData([]);
       setOriginalData([]);
     }
+  }
+
+  const updateRiskIndicatorsMutation = useMutation({ mutationFn: async () => {
+    const response = await fetch('/api/weights', {
+      method: 'PUT',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(data),
+    });
+    const updatedData = await response.json();
+    updateState(updatedData.data);
+  }});
+
+  useEffect(() => {
+    const fetchedData = riskIndicatorsQuery.data;
+    updateState(fetchedData);
   }, [riskIndicatorsQuery.data]);
 
   const isChanged = useMemo(() => {
@@ -207,9 +210,7 @@ export const RiskIndicatorsPage = () => {
         onClose={() => updateRiskIndicatorsMutation.reset()}
         color='danger'
       >
-        <Alert color="danger">
-          Failed to update risk indicators. Please try again later.
-        </Alert>
+        Failed to update risk indicators. Please try again later.
       </Snackbar>
       <Snackbar
         open={updateRiskIndicatorsMutation.isSuccess}
