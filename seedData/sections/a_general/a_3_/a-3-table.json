@@ -1,0 +1,36 @@
+{
+  "type": "TABLE",
+  "title": "Ա.3. Հայտարարատու պաշտոնատար անձի հետ մերձավոր ազգակցությամբ կամ խնամիությամբ կապված համատեղ չբնակվող անձանց մասին տվյալները",
+  "value": {
+    "headerItems": [
+      {
+        "name": "NN ը/կ",
+        "isNumbering": true,
+        "colSpan": 1
+      },
+      {
+        "name": "Կապը հայտարարատու  պաշտոնատար անձի հետ",
+        "isNumbering": false,
+        "colSpan": 1
+      },
+      {
+        "name": "Անունը, ազգանունը, հայրանունը",
+        "isNumbering": false,
+        "colSpan": 1
+      },
+      {
+        "name": "Ծննդյան օրը, ամիսը, տարին",
+        "isNumbering": false,
+        "colSpan": 1
+      }
+    ],
+    "rows": [],
+    "footerItems": []
+  },
+  "properties": {
+    "type": "TABLE",
+    "xs": 12,
+    "s": 12,
+    "m": 12
+  }
+}
