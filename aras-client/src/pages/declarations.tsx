@@ -200,7 +200,7 @@ export const DeclarationsPage = () => {
           <ArasSelect label="Department" options={departmentOptions} />
         </Box>
       </Box>
-      <Card sx={{ p: 0 }}>
+      <Card sx={{ p: 0, gap: 0 }}>
         <ArasTable table={table} />
       </Card>
     </Layout>
