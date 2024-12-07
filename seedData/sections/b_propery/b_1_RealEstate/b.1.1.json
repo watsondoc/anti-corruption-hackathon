@@ -1,0 +1,81 @@
+{
+  "type": "TABLE",
+  "title": "Բ.1.1. Անշարժ գույք",
+  "value": {
+    "headerItems": [
+      {
+        "name": "NN ը/կ",
+        "isNumbering": true,
+        "colSpan": 1
+      },
+      {
+        "name": "Հայտարարատու սեփականատիրոջ անունը, ազգանունը, հայրանունը",
+        "isNumbering": false,
+        "colSpan": 1
+      },
+      {
+        "name": "Անշարժ գույքի տեսակը",
+        "isNumbering": false,
+        "colSpan": 1
+      },
+      {
+        "name": "Սեփականության իրավունքի տեսակը",
+        "isNumbering": false,
+        "colSpan": 1
+      },
+      {
+        "name": "Հայտարարատու սեփականատիրոջ բաժինը",
+        "isNumbering": false,
+        "colSpan": 1
+      },
+      {
+        "name": "Համասեփականատիրոջ բաժինը",
+        "isNumbering": false,
+        "colSpan": 1
+      },
+      {
+        "name": "Համասեփականատիրոջ անվանումը կամ անունը, ազգանունը, հայրանունը",
+        "isNumbering": false,
+        "colSpan": 1
+      },
+      {
+        "name": "Հայտարարատուի և համասեփականատիրոջ միջև առկա կապի բնույթը",
+        "isNumbering": false,
+        "colSpan": 1
+      },
+      {
+        "name": "Գտնվելու վայրի հասցեն",
+        "isNumbering": false,
+        "colSpan": 1
+      },
+      {
+        "name": "Անշարժ գույքի հաշվառման համարը",
+        "isNumbering": false,
+        "colSpan": 1
+      },
+      {
+        "name": "Անշարժ գույքի մակերեսը",
+        "isNumbering": false,
+        "colSpan": 1
+      },
+      {
+        "name": "Անշարժ գույքը ձեռք բերելու տարին",
+        "isNumbering": false,
+        "colSpan": 1
+      },
+      {
+        "name": "Անշարժ գույքը ձեռք բերելու եղանակը",
+        "isNumbering": false,
+        "colSpan": 1
+      }
+    ],
+    "rows": [],
+    "footerItems": []
+  },
+  "properties": {
+    "type": "TABLE",
+    "xs": 12,
+    "s": 12,
+    "m": 12
+  }
+}

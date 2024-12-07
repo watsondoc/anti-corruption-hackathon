@@ -3,6 +3,8 @@ import { Layout } from '../components/layout';
 import { useQuery } from 'react-query';
 import { Typography, CircularProgress } from '@mui/joy';
 
+export const HomeBreadcrumb = { label: 'Home', href: '/' };
+
 export const MainPage: React.FC = () => {
     const catFact = useQuery('cat-fact', async () => {
         const response = await fetch('https://bible-api.com/?random=verse');

@@ -1,0 +1,51 @@
+{
+  "type": "TABLE",
+  "title": "Բ.4.1. Հանձնված փոխառություններ",
+  "value": {
+    "headerItems": [
+      {
+        "name": "NN ը/կ",
+        "isNumbering": true,
+        "colSpan": 1
+      },
+      {
+        "name": "Հայտարարատու պարտատիրոջ անունը, ազգանունը, հայրանունը",
+        "isNumbering": false,
+        "colSpan": 1
+      },
+      {
+        "name": "Պարտապանի անվանումը կամ անունը, ազգանունը, հայրանունը",
+        "isNumbering": false,
+        "colSpan": 1
+      },
+      {
+        "name": "Պարտապանի հասցեն",
+        "isNumbering": false,
+        "colSpan": 1
+      },
+      {
+        "name": "Կողմերի միջև առկա կապի բնույթը",
+        "isNumbering": false,
+        "colSpan": 1
+      },
+      {
+        "name": "Փոխառության տոկոսադրույքը",
+        "isNumbering": false,
+        "colSpan": 1
+      },
+      {
+        "name": "Պաշտոնի ստանձնման կամ դադարեցման օրվա դրությամբ առկա փոխառության գումարը և արժույթը",
+        "isNumbering": false,
+        "colSpan": 1
+      }
+    ],
+    "rows": [],
+    "footerItems": []
+  },
+  "properties": {
+    "type": "TABLE",
+    "xs": 12,
+    "s": 12,
+    "m": 12
+  }
+}
