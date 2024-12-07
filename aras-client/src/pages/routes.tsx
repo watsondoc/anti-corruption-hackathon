@@ -2,7 +2,7 @@ import { Route, Routes as RouterRoutes } from "react-router"
 
 import { MainPage } from "./main"
 import { DeclarationsPage } from "./declarations"
-import { DeclarationPage } from "./declaration/declaration"
+import { DeclarantPage } from "./declarant/declarant"
 import { RiskIndicatorsPage } from "./risk-indicators"
 
 export const Routes = () => {
@@ -10,6 +10,6 @@ export const Routes = () => {
         <Route index element={<MainPage />} />
         <Route path="risk-indicators" element={<RiskIndicatorsPage />} />
         <Route path="declarations" element={<DeclarationsPage />} />
-        <Route path="declarations/:id" element={<DeclarationPage />} />
+        <Route path="declarant/:id" element={<DeclarantPage />} />
     </RouterRoutes>
 }

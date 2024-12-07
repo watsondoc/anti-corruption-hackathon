@@ -2,4 +2,4 @@ export const HOME = { label: "Home", href: "/" };
 export const DECLARATIONS = { label: "Declarations", href: "/declarations"  };
 export const RISK_INDICATORS = { label: "Risk Indicators", href: "/risk-indicators" };
 
-export const declaration = (id: string, label: string) => ({ label, href: `/declarations/${id}` });
+export const declarant = (id: string, label: string) => ({ label, href: `/declarant/${id}` });

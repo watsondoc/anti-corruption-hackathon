@@ -8,14 +8,10 @@ import {
 import {
   Box,
   Card,
-  CardContent,
   Input,
   InputProps,
   Link,
-  List,
-  ListItem,
   Stack,
-  Typography,
 } from "@mui/joy";
 import { Layout } from "../components/layout";
 import { ArasTable } from "../components/table";
@@ -140,7 +136,7 @@ const columns = [
     header: "Declarant",
     cell: ({ cell, row }) => {
       return (
-        <Link component={RouterLink} to={`/declarations/${row.original.id}`}>
+        <Link component={RouterLink} to={`/declarant/${row.original.id}`}>
           {cell.getValue()}
         </Link>
       );
