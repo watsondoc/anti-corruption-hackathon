@@ -1,5 +1,6 @@
 import { Db, ObjectId } from 'mongodb';
 import { client } from '../db/mongoClient';
+import * as weightsData from './weights.json';
 
 export type WeightItem = {
   id: string;
@@ -82,9 +83,8 @@ class WeightsService {
   async generateWeights() {
     const weightsArray: WeightItem[] = [];
     try {
-      const data = require('./weights.json');
-    const collection = this.db.collection(this.collectionName);
-      const result = await collection.insertMany(data);
+      const collection = this.db.collection(this.collectionName);
+      const result = await collection.insertMany(weightsData);
       console.log(`Inserted ${result.insertedCount} documents into the weight collection`);
     } catch (err) {
       console.error("Failed to insert data", err);
