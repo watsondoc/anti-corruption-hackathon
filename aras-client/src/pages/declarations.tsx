@@ -250,7 +250,7 @@ export const Filters = ({ onFiltersChange }: FilterProps) => {
   }, [query, year, declarationType, declarantType, institutionType, onFiltersChange]);
 
   return (
-    <Stack mt={2} direction="column" gap={2}>
+    <Stack direction="column" gap={2}>
       <Stack gap={1} alignItems="end" direction="row">
         <Box flex="1 1">
           <SearchInput
@@ -342,7 +342,7 @@ export const DeclarationsPage = () => {
 
   return (
     <Layout title="Declarations" breadcrumbs={[HOME, DECLARATIONS]}>
-      <Card sx={{ maxWidth: "300px" }}>
+      {/* <Card sx={{ maxWidth: "300px" }}>
         <Typography level="title-md">Summary</Typography>
         <CardContent orientation="vertical">
           <List marker="disc">
@@ -351,7 +351,7 @@ export const DeclarationsPage = () => {
             <ListItem>Number of risk indicators: 23</ListItem>
           </List>
         </CardContent>
-      </Card>
+      </Card> */}
       <Filters
         onFiltersChange={(query, year, declarationType, declarantType, institution ) => {
           setFilters({ query, year, declarationType, declarantType, institution });
