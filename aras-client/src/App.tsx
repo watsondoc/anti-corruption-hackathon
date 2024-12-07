@@ -1,9 +1,9 @@
 import "./App.css";
 import { BrowserRouter } from "react-router";
-import { QueryClient, QueryClientProvider } from 'react-query'
+import { QueryClientProvider } from 'react-query'
 import { Routes } from "./pages/routes";
+import { queryClient } from "./query";
 
-const queryClient = new QueryClient()
 
 function App() {
   return (

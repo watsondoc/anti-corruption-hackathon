@@ -13,3 +13,7 @@
 body {
   margin: 0;
 }
+
+table {
+  table-layout: fixed;
+}

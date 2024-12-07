@@ -13,12 +13,24 @@ interface Breadcrumb {
   href: string;
 }
 
+const navbar = [
+  {
+    label: "Home",
+    href: "/",
+  },
+  {
+    label: "Declarations",
+    href: "/declarations",
+  },
+  {
+    label: "Risk Indicators",
+    href: "/risk-indicators",
+  },
+];
+
 export const Layout = ({ children, title, breadcrumbs }: Props) => {
   const location = useLocation();
-  console.log("Current location:", location);
-
   const isHome = location.pathname === "/";
-  const isDeclaration = location.pathname === "/declarations";
 
   return (
     <Container>
@@ -51,23 +63,28 @@ export const Layout = ({ children, title, breadcrumbs }: Props) => {
         </Box>
 
         <Box>
-          <Link component={RouterLink} to="/" sx={{ mx: 2 }} disabled={isHome}>
-            Home
-          </Link>
-          <Link
-            component={RouterLink}
-            to="/declarations"
-            sx={{ mx: 2 }}
-            disabled={isDeclaration}
-          >
-            Declarations
-          </Link>
+          {navbar.map(({ label, href }) => (
+            <Link
+              key={href}
+              component={RouterLink}
+              to={href}
+              sx={{ mx: 2 }}
+              disabled={location.pathname === href}
+            >
+              {label}
+            </Link>
+          ))}
         </Box>
       </Box>
       <Box component="main" sx={{ p: 2 }}>
         <Breadcrumbs sx={{ px: 0 }}>
           {breadcrumbs?.map(({ label, href }) => (
-            <Link key={href} component={RouterLink} to={href} disabled={location.pathname === href}>
+            <Link
+              key={href}
+              component={RouterLink}
+              to={href}
+              disabled={location.pathname === href}
+            >
               {label}
             </Link>
           ))}
