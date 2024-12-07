@@ -1,5 +1,5 @@
 
-export interface DeclarationPersonInfo {
+export interface a_1_DeclarationPersonInfo {
   fullName: string; // row 1
   birthDate: string; // row 2
   socialSecurityNumber: string; // row 3
@@ -12,8 +12,7 @@ export interface DeclarationPersonInfo {
   declarationDate: string; // row 10
 }
 
-export function parseDeclarationPersonInfo(data: any): DeclarationPersonInfo {
-  const rows = data.value.rows;
+export function parseDeclarationPersonInfo(rows: string[][]): a_1_DeclarationPersonInfo {
   return {
     fullName: rows[0][2],
     birthDate: rows[1][2],
