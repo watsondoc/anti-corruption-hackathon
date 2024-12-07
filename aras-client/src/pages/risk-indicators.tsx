@@ -197,7 +197,7 @@ export const RiskIndicatorsPage = () => {
         </Button>
       </Stack>
       <Card>
-        <ArasTable table={table} paginationType="off" />
+        <ArasTable table={table} paginationType="off" isLoading={riskIndicatorsQuery.isLoading} />
       </Card>
       <Snackbar
         open={updateRiskIndicatorsMutation.isError}
