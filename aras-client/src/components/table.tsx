@@ -1,5 +1,6 @@
 import { Table } from "@mui/joy";
 import { flexRender, Table as TableType } from "@tanstack/react-table";
+import { getRiskClass } from "../utils";
 
 export interface Record {
     risk?: number;
@@ -8,19 +9,6 @@ export interface Record {
 interface TableProps<T extends Record> {
     table: TableType<T>;
 }
-
-export const getRiskClass = (risk?: number): string | undefined => {
-    if (!risk || risk < 0 || risk > 1) {
-        return;
-    }
-    
-    const riskType = Math.round(risk * 4);
-    if (riskType == 0) {
-        return undefined
-    }
-
-    return `danger-${riskType}`;
-};
 
 export const ArasTable = <T extends Record,>({table}: TableProps<T>) => {
     return <Table
