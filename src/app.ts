@@ -6,6 +6,7 @@ import { connectToDatabase } from "./db/mongoClient";
 import { JSONToMongoParser } from './parser/JSONToMongoParser';
 import * as path from 'path';
 import { weightsService } from './services/WeightsService';
+import { DeclarantsSeeder } from "./parser/DeclarantsSeeder";
 
 dotenv.config();
 
@@ -26,10 +27,15 @@ const startServer = async () => {
 
   const parser = new JSONToMongoParser('corruption', 'declarations');
 
-  await parser.loadDeclarations(
-    path.resolve(__dirname, '../seedData/general_2024.json'),
-    path.resolve(__dirname, '../seedData/details_2024.json'),
-  );
+  // await parser.loadDeclarations(
+  //   path.resolve('D:/Projects/anti-corruption-hackathon/data/final_data/declarations/general_2021.json'),
+  //   path.resolve('D:/Projects/anti-corruption-hackathon/data/final_data/declarations/details_2021.json'),
+  // );
+
+  // const declarantsSeeder = new DeclarantsSeeder();
+  // await declarantsSeeder.seedDeclarants(
+  //   path.resolve('D:/Projects/anti-corruption-hackathon/utils/parse-ids-mapping/declarationsByDeclarant.json')
+  // );
 
   app.listen(port, () => {
     console.log(`Server running on http://localhost:${port}`);
