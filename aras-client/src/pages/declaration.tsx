@@ -15,6 +15,7 @@ import {
   useReactTable,
 } from "@tanstack/react-table";
 import { formatCurrency } from "../utils";
+import { declaration, DECLARATIONS, HOME } from "../breadcrumbs";
 
 interface Asset extends Record{
   risk?: number;
@@ -60,7 +61,7 @@ export const DeclarationPage: React.FC = () => {
   });
 
   return (
-    <Layout title="John Doe">
+    <Layout title="John Doe" breadcrumbs={[HOME, DECLARATIONS, declaration('1', publicOfficial.name)]}>
       <Box display="flex" gap={2} flexWrap="wrap">
         <Card sx={{ flex: "1 1", minWidth: 250 }}>
           <Typography level="title-md">General Info</Typography>

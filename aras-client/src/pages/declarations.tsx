@@ -2,13 +2,15 @@ import { Link as RouterLink } from "react-router";
 import {
   createColumnHelper,
   getCoreRowModel,
+  getPaginationRowModel,
   useReactTable,
 } from "@tanstack/react-table";
-import { Box, Card, CardContent, Input, Link, List, ListItem, Sheet, Typography } from "@mui/joy";
+import { Box, Button, Card, CardContent, Input, Link, List, ListItem, Typography } from "@mui/joy";
 import { Layout } from "../components/layout";
 import { ArasTable } from "../components/table";
 import { ArasSelect } from "../components/select";
 import { formatCurrency } from "../utils";
+import { HOME, DECLARATIONS } from "../breadcrumbs";
 
 interface Declaration {
   id: string;
@@ -68,6 +70,54 @@ const data: Declaration[] = [
     risk: 0.01,
     income: 95000,
   },
+  {
+    id: "11",
+    name: "John Doe",
+    position: "Mayor",
+    declarationDate: "2023",
+    risk: 1,
+    income: 98000,
+  },
+  {
+    id: "12",
+    name: "Jane Smith",
+    position: "Council Member",
+    declarationDate: "2024",
+    risk: 0.78,
+    income: 88000,
+  },
+  {
+    id: "13",
+    name: "Alice Johnson",
+    position: "Treasurer",
+    declarationDate: "2023",
+    risk: 0.56,
+    income: 93000,
+  },
+  {
+    id: "14",
+    name: "Bob Brown",
+    position: "Secretary",
+    declarationDate: "2024",
+    risk: 0.32,
+    income: 83000,
+  },
+  {
+    id: "15",
+    name: "Charlie Davis",
+    position: "Chief of Staff",
+    declarationDate: "2023",
+    risk: 0.25,
+    income: 91000,
+  },
+  {
+    id: "16",
+    name: "David Wilson",
+    position: "Deputy Mayor",
+    declarationDate: "2023",
+    risk: 0.01,
+    income: 95000,
+  },
 ];
 
 const columnHelper = createColumnHelper<Declaration>();
@@ -120,10 +170,16 @@ export const DeclarationsPage = () => {
     columns,
     data,
     getCoreRowModel: getCoreRowModel(),
+    getPaginationRowModel: getPaginationRowModel(),
+    initialState: {
+      pagination: {
+        pageSize: 10,
+      }
+    }
   });
 
   return (
-    <Layout title="Declarations">
+    <Layout title="Declarations" breadcrumbs={[HOME, DECLARATIONS]}>
       <Card sx={{ maxWidth: '300px' }}>
         <Typography level="title-md">Summary</Typography>
         <CardContent orientation="vertical">
@@ -145,7 +201,7 @@ export const DeclarationsPage = () => {
           <ArasSelect label="Department" options={departmentOptions} />
         </Box>
       </Box>
-      <Card sx={{ p: 0 }}>
+      <Card sx={{ p: 0, gap: 0 }}>
         <ArasTable table={table} />
       </Card>
     </Layout>
