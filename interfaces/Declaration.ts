@@ -1,3 +1,4 @@
+import { b_5_1_ValuableProperty, b_5_2_DeclarantValuableProperty } from "../seedData/sections/b_propery/b_5_ExpensiveProperty";
 import { a_1_DeclarationPersonInfo } from "../seedData/sections/a_general/a_1_perfonInfo/a_1_DeclarationPersonInfo";
 import { a_2_DeclarantFamilyMember } from "../seedData/sections/a_general/a_2_family/a_2_DeclarantFamilyMember";
 import { a_3_DeclarantNonResidentRelative } from "../seedData/sections/a_general/a_3_/a_3_DeclarantNonResidentRelative";
@@ -13,6 +14,7 @@ import { b_4_1_DeclarantLoan } from "../seedData/sections/b_propery/b_4_LoansAnd
 import { b_4_2_DeclarantThirdPartyLoan } from "../seedData/sections/b_propery/b_4_LoansAndDeposits/b.4.2";
 import { b_4_3_BankDeposit } from "../seedData/sections/b_propery/b_4_LoansAndDeposits/b.4.3";
 import { b_4_4_ThirdPartyBankDeposit } from "../seedData/sections/b_propery/b_4_LoansAndDeposits/b.4.4";
+import { b_6_1_BankAccountBalance, b_6_2_ThirdPartyBankAccountBalance, b_6_3_ElectronicAccountCrypto, b_6_4_ThirdPartyElectronicAccountCrypto, b_6_5_CashHoldings, b_6_6_CashHoldingsThirdParty } from "../seedData/sections/b_propery/b_6_FinancialMeans";
 
 export interface Declaration {
     id: string;
@@ -65,6 +67,18 @@ export interface B_PropertySection {
         b_4_2_declarantThirdPartyLoans: b_4_2_DeclarantThirdPartyLoan[];
         b_4_3_bankDeposits: b_4_3_BankDeposit[];
         b_4_4_declarantThirdPartyDeposits: b_4_4_ThirdPartyBankDeposit[];
+    },
+    b_5_expensiveProperty: {
+        b_5_1_valuableProperties: b_5_1_ValuableProperty[],
+        b_5_2_declarantValuableProperties: b_5_2_DeclarantValuableProperty[]
+    },
+    b_6_financialMeans: {
+        b_6_1_bankAccountBalances: b_6_1_BankAccountBalance[],
+        b_6_2_thirdPartyBankAccountBalances: b_6_2_ThirdPartyBankAccountBalance[],
+        b_6_3_electronicAccountCrypto: b_6_3_ElectronicAccountCrypto[],
+        b_6_4_thirdPartyElectronicAccountCrypto: b_6_4_ThirdPartyElectronicAccountCrypto[],
+        b_6_5_cashHoldings: b_6_5_CashHoldings[],
+        b_6_6_cashHoldingsThirdParty: b_6_6_CashHoldingsThirdParty[]
     }
 }
 
