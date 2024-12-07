@@ -1,13 +1,12 @@
 import { Link as RouterLink } from 'react-router'
 import {
     createColumnHelper,
-    flexRender,
     getCoreRowModel,
     useReactTable,
-  } from '@tanstack/react-table'
-
-import { Table, Link } from '@mui/joy';
+} from '@tanstack/react-table'
+import { Link, Sheet } from '@mui/joy';
 import { Layout } from '../components/layout';
+import { ArasTable } from '../components/table';
 
 
 interface Declaration {
@@ -15,13 +14,46 @@ interface Declaration {
     name: string;
     position: string;
     declarationDate: string;
+    risk: number;
 }
 
 
 const data: Declaration[] = [
-    { id: '1', name: 'John Doe', position: 'Mayor', declarationDate: '2023-01-15' },
-    { id: '2', name: 'Jane Smith', position: 'Council Member', declarationDate: '2023-02-10' },
-    // Add more declarations as needed
+    { 
+        id: '1', 
+        name: 'John Doe', 
+        position: 'Mayor', 
+        declarationDate: '2023-01-15',
+        risk: 0.87,
+    },
+    { 
+        id: '2', 
+        name: 'Jane Smith', 
+        position: 'Council Member', 
+        declarationDate: '2023-02-10',
+        risk: 0.56,
+    },
+    { 
+        id: '3', 
+        name: 'Alice Johnson', 
+        position: 'Treasurer', 
+        declarationDate: '2023-03-05',
+        risk: 0.45,
+    },
+    { 
+        id: '4', 
+        name: 'Bob Brown', 
+        position: 'Secretary', 
+        declarationDate: '2023-04-12',
+        risk: 0.32,
+    },
+    { 
+        id: '5', 
+        name: 'Charlie Davis', 
+        position: 'Chief of Staff', 
+        declarationDate: '2023-05-20',
+        risk: 0.1,
+    },
 ];
 
 const columnHelper = createColumnHelper<Declaration>()
@@ -43,6 +75,10 @@ const columns = [
         header: 'Declaration Date',
         cell: info => info.getValue(),
     }),
+    columnHelper.accessor('risk', {
+        header: 'Risk',
+        cell: info => info.getValue(),
+    }),
 ];
 
 export const DeclarationsPage = () => {
@@ -50,38 +86,9 @@ export const DeclarationsPage = () => {
 
     return (
         <Layout title='Declarations'>
-            <Table
-                borderAxis="xBetween"
-                color="neutral"
-            >
-                <thead>
-                {table.getHeaderGroups().map(headerGroup => (
-                    <tr key={headerGroup.id}>
-                    {headerGroup.headers.map(header => (
-                        <th key={header.id}>
-                        {header.isPlaceholder
-                            ? null
-                            : flexRender(
-                                header.column.columnDef.header,
-                                header.getContext()
-                            )}
-                        </th>
-                    ))}
-                    </tr>
-                ))}
-                </thead>
-                <tbody>
-                {table.getRowModel().rows.map(row => (
-                    <tr key={row.id}>
-                    {row.getVisibleCells().map(cell => (
-                        <td key={cell.id}>
-                        {flexRender(cell.column.columnDef.cell, cell.getContext())}
-                        </td>
-                    ))}
-                    </tr>
-                ))}
-                </tbody>
-            </Table>
+            <Sheet variant='outlined'>
+                <ArasTable table={table} />
+            </Sheet>
         </Layout>
     );
 };
