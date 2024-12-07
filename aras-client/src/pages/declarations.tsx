@@ -28,9 +28,17 @@ import debounce from "debounce";
 
 interface Declaration {
   id: string;
-  name: string;
+
+  year: string;
+  type: string;
+
+  declarantType: string;
+  declarant: string;
+  
   position: string;
-  declarationDate: string;
+  institutionGroup: string;
+  institution: string;
+  
   risk: number;
   income: number;
 }
@@ -38,97 +46,73 @@ interface Declaration {
 const data: Declaration[] = [
   {
     id: "1",
-    name: "John Doe",
+    year: "2023",
+    type: "Annual",
+    declarantType: "Official",
+    declarant: "John Doe",
     position: "Mayor",
-    declarationDate: "2023",
+    institutionGroup: "Local Government",
+    institution: "City Hall",
     risk: 1,
     income: 98000,
   },
   {
     id: "2",
-    name: "Jane Smith",
+    year: "2024",
+    type: "Annual",
+    declarantType: "Official",
+    declarant: "Jane Smith",
     position: "Council Member",
-    declarationDate: "2024",
+    institutionGroup: "Local Government",
+    institution: "City Council",
     risk: 0.78,
     income: 88000,
   },
   {
     id: "3",
-    name: "Alice Johnson",
+    year: "2023",
+    type: "Annual",
+    declarantType: "Official",
+    declarant: "Alice Johnson",
     position: "Treasurer",
-    declarationDate: "2023",
+    institutionGroup: "Local Government",
+    institution: "City Treasury",
     risk: 0.56,
     income: 93000,
   },
   {
     id: "4",
-    name: "Bob Brown",
+    year: "2024",
+    type: "Annual",
+    declarantType: "Relative",
+    declarant: "Bob Brown",
     position: "Secretary",
-    declarationDate: "2024",
+    institutionGroup: "Local Government",
+    institution: "City Hall",
     risk: 0.32,
     income: 83000,
   },
   {
     id: "5",
-    name: "Charlie Davis",
+    year: "2023",
+    type: "Annual",
+    declarantType: "Official",
+    declarant: "Charlie Davis",
     position: "Chief of Staff",
-    declarationDate: "2023",
+    institutionGroup: "Local Government",
+    institution: "City Hall",
     risk: 0.25,
     income: 91000,
   },
   {
     id: "6",
-    name: "David Wilson",
+    year: "2023",
+    type: "Annual",
+    declarantType: "Official",
+    declarant: "David Wilson",
     position: "Deputy Mayor",
-    declarationDate: "2023",
-    risk: 0.01,
-    income: 95000,
-  },
-  {
-    id: "11",
-    name: "John Doe",
-    position: "Mayor",
-    declarationDate: "2023",
-    risk: 1,
-    income: 98000,
-  },
-  {
-    id: "12",
-    name: "Jane Smith",
-    position: "Council Member",
-    declarationDate: "2024",
-    risk: 0.78,
-    income: 88000,
-  },
-  {
-    id: "13",
-    name: "Alice Johnson",
-    position: "Treasurer",
-    declarationDate: "2023",
-    risk: 0.56,
-    income: 93000,
-  },
-  {
-    id: "14",
-    name: "Bob Brown",
-    position: "Secretary",
-    declarationDate: "2024",
-    risk: 0.32,
-    income: 83000,
-  },
-  {
-    id: "15",
-    name: "Charlie Davis",
-    position: "Chief of Staff",
-    declarationDate: "2023",
-    risk: 0.25,
-    income: 91000,
-  },
-  {
-    id: "16",
-    name: "David Wilson",
-    position: "Deputy Mayor",
-    declarationDate: "2023",
+    institutionGroup: "Local Government",
+    institution: "City Hall",
     risk: 0.01,
     income: 95000,
   },
@@ -137,8 +121,23 @@ const data: Declaration[] = [
 const columnHelper = createColumnHelper<Declaration>();
 
 const columns = [
-  columnHelper.accessor("name", {
-    header: "Name",
+  columnHelper.accessor("year", {
+    header: "Year",
+    cell: (info) => info.getValue(),
+    size: 50,
+  }),
+  columnHelper.accessor("type", {
+    header: "Type",
+    cell: (info) => info.getValue(),
+    size: 100,
+  }),
+  columnHelper.accessor("declarantType", {
+    header: "Declarant Type",
+    cell: (info) => info.getValue(),
+    size: 100,
+  }),
+  columnHelper.accessor("declarant", {
+    header: "Declarant",
     cell: ({ cell, row }) => {
       return (
         <Link component={RouterLink} to={`/declarations/${row.original.id}`}>
@@ -146,22 +145,32 @@ const columns = [
         </Link>
       );
     },
+    size: 120,
+  }),
+  columnHelper.accessor("institutionGroup", {
+    header: "Institution Group",
+    cell: (info) => info.getValue(),
+    size: 200,
   }),
   columnHelper.accessor("position", {
     header: "Position",
     cell: (info) => info.getValue(),
+    size: 200,
   }),
-  columnHelper.accessor("declarationDate", {
-    header: "Declaration year",
+  columnHelper.accessor("institution", {
+    header: "Institution",
     cell: (info) => info.getValue(),
+    size: 250,
   }),
   columnHelper.accessor("risk", {
     header: "Risk Rating",
     cell: (risk) => risk.getValue(),
+    size: 100,
   }),
   columnHelper.accessor("income", {
     header: "Income",
     cell: (income) => formatCurrency(income.getValue()),
+    size: 100
   }),
 ];
 
