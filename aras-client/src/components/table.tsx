@@ -11,7 +11,7 @@ export interface Record {
 
 interface TableProps<T extends Record> {
   table: TableType<T>;
-  manualPagination?: boolean;
+  paginationType?: 'manual' | 'auto' | 'off';
   isLoading?: boolean;
   hasNext?: boolean;
   hasPrev?: boolean;
@@ -77,7 +77,7 @@ const PAGE_SIZES = [10, 20, 30, 40, 50];
 export const ArasTable = <T extends Record>({
   table,
   isLoading,
-  manualPagination = false,
+  paginationType = 'auto',
   ...props
 }: TableProps<T>) => {
   return (
@@ -88,7 +88,7 @@ export const ArasTable = <T extends Record>({
             {table.getHeaderGroups().map((headerGroup) => (
               <tr key={headerGroup.id}>
                 {headerGroup.headers.map((header) => (
-                  <th key={header.id} className="cell" {...{ width: 200 }}>
+                  <th key={header.id} className="cell" {...{ width: header.getSize() || 200 }}>
                     {header.isPlaceholder
                       ? null
                       : flexRender(
@@ -125,8 +125,8 @@ export const ArasTable = <T extends Record>({
           </tbody>
         </Table>
       </Box>
-      <Divider sx={{ pt: 0 }} />
-      {!manualPagination && (
+      {paginationType !== 'off' && <Divider sx={{ pt: 0 }} />}
+      {paginationType === 'auto' && (
         <Box py={1} px={2}>
           <Pagination
             pageOptions={PAGE_SIZES}
@@ -140,7 +140,7 @@ export const ArasTable = <T extends Record>({
           />
         </Box>
       )}
-      {manualPagination && (
+      {paginationType === 'manual' && (
         <Box py={1} px={2}>
           <Pagination
             pageOptions={PAGE_SIZES}
