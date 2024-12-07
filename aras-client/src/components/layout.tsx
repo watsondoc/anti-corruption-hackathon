@@ -65,6 +65,7 @@ export const Layout = ({ children, title, breadcrumbs }: Props) => {
         <Box>
           {navbar.map(({ label, href }) => (
             <Link
+              key={href}
               component={RouterLink}
               to={href}
               sx={{ mx: 2 }}

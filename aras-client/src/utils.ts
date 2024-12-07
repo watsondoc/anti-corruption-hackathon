@@ -1,4 +1,3 @@
-
 export const getRiskClass = (risk?: number): string | undefined => {
     if (!risk || risk < 0 || risk > 1) {
         return;
