@@ -45,7 +45,7 @@ const columns = [
     cell: (title) => title.getValue(),
   }),
   columnHelper.accessor("prevWeight", {
-    header: "Previous Weight",
+    header: "Current Weight",
     size: 75,
     cell: (prevWeight) => prevWeight.getValue().toFixed(0),
   }),
