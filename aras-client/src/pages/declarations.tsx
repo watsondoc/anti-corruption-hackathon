@@ -10,6 +10,7 @@ import { Layout } from "../components/layout";
 import { ArasTable } from "../components/table";
 import { ArasSelect } from "../components/select";
 import { formatCurrency } from "../utils";
+import { HOME, DECLARATIONS } from "../breadcrumbs";
 
 interface Declaration {
   id: string;
@@ -178,7 +179,7 @@ export const DeclarationsPage = () => {
   });
 
   return (
-    <Layout title="Declarations">
+    <Layout title="Declarations" breadcrumbs={[HOME, DECLARATIONS]}>
       <Card sx={{ maxWidth: '300px' }}>
         <Typography level="title-md">Summary</Typography>
         <CardContent orientation="vertical">
