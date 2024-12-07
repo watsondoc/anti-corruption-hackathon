@@ -1,0 +1,44 @@
+[
+  {
+    "id": "DPRI",
+    "title": "'Disappearing' property",
+    "weight": 3,
+    "defaultWeight": 3,
+    "description": "This indicator is the basis for the verification of the declared data, as a result of which, based on the reasons for non-declaration, the specialist carrying out the verification of the declaration will present his conclusion on the presence or absence of the need for a complex analysis."
+  },
+  {
+    "id": "IrrRI",
+    "title": "Irrelevances with state repositories",
+    "weight": 3,
+    "defaultWeight": 3,
+    "description": "This indicator is the basis for the verification of the declared data, as a result of which, based on the reasons for non-declaration, the specialist carrying out the verification of the declaration will present his conclusion on the presence or absence of the need for a complex analysis."
+  },
+  {
+    "id": "DWOSRI",
+    "title": "Receipt of dividend without declaration of security and other investment",
+    "weight": 3,
+    "defaultWeight": 3,
+    "description": "This indicator is the basis for the verification of the declared data, as a result of which, based on the reasons for non-declaration, the specialist carrying out the verification of the declaration will present his conclusion on the presence or absence of the need for a complex analysis."
+  },
+  {
+    "id": "MEIRI",
+    "title": "Mismatch of expenses and income",
+    "weight": 3,
+    "defaultWeight": 3,
+    "description": "This risk indicator is the first important indicator that the declarant has a side and undeclared source of income. In the application of the indicator, the concept of basic expenditure is of key importance, which is the means by which a person takes care of his daily basic needs and those under his financial responsibility."
+  },
+  {
+    "id": "QPDRI",
+    "title": "Quantitative deviation of owned/occupied property from the average",
+    "weight": 3,
+    "defaultWeight": 3,
+    "description": "This indicator is aimed at identifying declarants with abilities outside the general norm. Each property requires a specific investment for acquisition, as well as mandatory costs for maintenance and maintenance over the years, which is subject to assessment in the case of a large number of properties."
+  },
+  {
+    "id": "CrySRI",
+    "title": "Significant savings held in cash and cryptocurrency",
+    "weight": 3,
+    "defaultWeight": 3,
+    "description": "Savings held in cash or cryptocurrency are more risky, as their source of origin and subsequent realization are uncontrollable, and their real existence is not subject to verification, as a result of which declarants can declare savings that do not actually exist, with which they will later justify their gains."
+  }
+]

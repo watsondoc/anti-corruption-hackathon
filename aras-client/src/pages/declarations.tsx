@@ -155,7 +155,7 @@ const columns = [
     cell: (info) => info.getValue(),
   }),
   columnHelper.accessor("risk", {
-    header: "Risk",
+    header: "Risk Rating",
     cell: (risk) => risk.getValue(),
   }),
   columnHelper.accessor("income", {
