@@ -1,0 +1,41 @@
+{
+  "type": "TABLE",
+  "title": "Բ.4.3. Բանկային ավանդներ",
+  "value": {
+    "headerItems": [
+      {
+        "name": "NN ը/կ",
+        "isNumbering": true,
+        "colSpan": 1
+      },
+      {
+        "name": "Հայտարարատու պարտատիրոջ անունը, ազգանունը, հայրանունը",
+        "isNumbering": false,
+        "colSpan": 1
+      },
+      {
+        "name": "Բանկի անվանումը (ՀՀ տարածքից դուրս գտնվող բանկի դեպքում)",
+        "isNumbering": false,
+        "colSpan": 1
+      },
+      {
+        "name": "Բանկի գտնվելու վայրը (ՀՀ տարածքից դուրս գտնվող բանկի դեպքում)",
+        "isNumbering": false,
+        "colSpan": 1
+      },
+      {
+        "name": "Պաշտոնի ստանձնման կամ դադարեցման օրվա դրությամբ տվյալ բանկում առկա ավանդի գումարը և արժույթը",
+        "isNumbering": false,
+        "colSpan": 1
+      }
+    ],
+    "rows": [],
+    "footerItems": []
+  },
+  "properties": {
+    "type": "TABLE",
+    "xs": 12,
+    "s": 12,
+    "m": 12
+  }
+}

@@ -1,0 +1,269 @@
+{
+  "title": "Գ.1. ՀԱՅՏԱՐԱՐԱՏՈՒ ՊԱՇՏՈՆԱՏԱՐ ԱՆՁԻ, ՆՐԱ ԸՆՏԱՆԻՔԻ ԱՆՉԱՓԱՀԱՍ ԱՆԴԱՄՆԵՐԻ ԵՎ ԽՆԱՄԱԿԱԼՈՒԹՅԱՆ ԿԱՄ ՀՈԳԱԲԱՐՁՈՒԹՅԱՆ ՏԱԿ ԳՏՆՎՈՂ ԱՆՁԱՆՑ ԵԿԱՄՈՒՏՆԵՐ",
+  "grids": [
+    {
+      "title": "",
+      "category": "Revenues",
+      "instanceId": 172498,
+      "rows": [
+        {
+          "cells": [
+            {
+              "type": "TABLE",
+              "title": "Գ.1.1.Հաշվետու ժամանակաշրջանի եկամուտներ",
+              "value": {
+                "headerItems": [
+                  {
+                    "name": "NN ը/կ",
+                    "isNumbering": true,
+                    "colSpan": 1
+                  },
+                  {
+                    "name": "Եկամուտ ստացող հայտարարատուի անունը, ազգանունը, հայրանունը",
+                    "isNumbering": false,
+                    "colSpan": 1
+                  },
+                  {
+                    "name": "Եկամտի տեսակը",
+                    "isNumbering": false,
+                    "colSpan": 1
+                  },
+                  {
+                    "name": "Եկամուտ վճարող կազմակերպության անվանումը կամ ֆիզիկական անձի անունը, ազգանունը և հայրանունը",
+                    "isNumbering": false,
+                    "colSpan": 1
+                  },
+                  {
+                    "name": "Եկամուտ վճարողի հասցեն",
+                    "isNumbering": false,
+                    "colSpan": 1
+                  },
+                  {
+                    "name": "Հայտարարատուի և եկամուտ վճարողի միջև առկա կապի բնույթը",
+                    "isNumbering": false,
+                    "colSpan": 1
+                  },
+                  {
+                    "name": "Ստացված եկամտի գումարը և արժույթը",
+                    "isNumbering": false,
+                    "colSpan": 1
+                  },
+                  {
+                    "name": "Բնամթերային ձևով ստացված եկամուտը",
+                    "isNumbering": false,
+                    "colSpan": 1
+                  }
+                ],
+                "rows": [
+                  [
+                    "1.",
+                    "ՌԱԶՄԻԿ ԳԱՍՊԱՐՅԱՆ ԱՐԹՈՒՐԻ",
+                    "Աշխատանքի վարձատրություն և/կամ դրան հավասարեցված այլ վճարումներ",
+                    "ՀՀ ՆԳՆ Ոստիկանություն",
+                    "Պաշտպանված",
+                    "Պաշտպանված",
+                    "֏ 3,080,000",
+                    ""
+                  ]
+                ],
+                "footerItems": [
+                  {
+                    "value": "Ընդամենը",
+                    "colSpan": 2
+                  },
+                  {
+                    "value": "",
+                    "colSpan": 1
+                  },
+                  {
+                    "value": "",
+                    "colSpan": 1
+                  },
+                  {
+                    "value": "",
+                    "colSpan": 1
+                  },
+                  {
+                    "value": "",
+                    "colSpan": 1
+                  },
+                  {
+                    "value": "֏ 3,080,000",
+                    "colSpan": 1
+                  },
+                  {
+                    "value": "",
+                    "colSpan": 1
+                  }
+                ]
+              },
+              "properties": {
+                "type": "TABLE",
+                "xs": 12,
+                "s": 12,
+                "m": 12
+              }
+            }
+          ],
+          "empty": false
+        },
+        {
+          "cells": [
+            {
+              "type": "TABLE",
+              "title": "Գ.1.2.Ստացված վարկերի և փոխառությունների մայր գումարի մնացորդը պաշտոնի ստանձնման կամ դադարեցման օրվա դրությամբ",
+              "value": {
+                "headerItems": [
+                  {
+                    "name": "NN ը/կ",
+                    "isNumbering": true,
+                    "colSpan": 1
+                  },
+                  {
+                    "name": "Եկամուտ ստացող հայտարարատուի անունը, ազգանունը, հայրանունը",
+                    "isNumbering": false,
+                    "colSpan": 1
+                  },
+                  {
+                    "name": "Վարկատուի կամ փոխատուի անվանումը կամ անունը, ազգանունը և հայրանունը",
+                    "isNumbering": false,
+                    "colSpan": 1
+                  },
+                  {
+                    "name": "Վարկատուի կամ փոխատուի հասցեն",
+                    "isNumbering": false,
+                    "colSpan": 1
+                  },
+                  {
+                    "name": "Փոխառության մնացորդի չափը",
+                    "isNumbering": false,
+                    "colSpan": 1
+                  },
+                  {
+                    "name": "Փոխառության տոկոսադրույքը",
+                    "isNumbering": false,
+                    "colSpan": 1
+                  },
+                  {
+                    "name": "Փոխառության նպատակային նշանակությունը",
+                    "isNumbering": false,
+                    "colSpan": 1
+                  },
+                  {
+                    "name": "Վարկի մայր գումարի մնացորդի չափը",
+                    "isNumbering": false,
+                    "colSpan": 1
+                  },
+                  {
+                    "name": "Վարկի նպատակային նշանակությունը",
+                    "isNumbering": false,
+                    "colSpan": 1
+                  },
+                  {
+                    "name": "Հիպոտեկի դեպքում՝ հիպոտեկի առարկան",
+                    "isNumbering": false,
+                    "colSpan": 1
+                  },
+                  {
+                    "name": "Հիպոտեկի դեպքում՝ հիպոտեկի առարկայի գտնվելու վայրը",
+                    "isNumbering": false,
+                    "colSpan": 1
+                  }
+                ],
+                "rows": [
+                  [
+                    "1.",
+                    "Պաշտպանված",
+                    "Պաշտպանված",
+                    "Պաշտպանված",
+                    "",
+                    "",
+                    "Պաշտպանված",
+                    "֏ 4,200,000",
+                    "Պաշտպանված",
+                    "",
+                    "Պաշտպանված"
+                  ]
+                ],
+                "footerItems": [
+                  {
+                    "value": "Ընդամենը",
+                    "colSpan": 2
+                  },
+                  {
+                    "value": "",
+                    "colSpan": 1
+                  },
+                  {
+                    "value": "",
+                    "colSpan": 1
+                  },
+                  {
+                    "value": "",
+                    "colSpan": 1
+                  },
+                  {
+                    "value": "",
+                    "colSpan": 1
+                  },
+                  {
+                    "value": "",
+                    "colSpan": 1
+                  },
+                  {
+                    "value": "֏ 4,200,000",
+                    "colSpan": 1
+                  },
+                  {
+                    "value": "",
+                    "colSpan": 1
+                  },
+                  {
+                    "value": "",
+                    "colSpan": 1
+                  },
+                  {
+                    "value": "",
+                    "colSpan": 1
+                  }
+                ]
+              },
+              "properties": {
+                "type": "TABLE",
+                "xs": 12,
+                "s": 12,
+                "m": 12
+              }
+            }
+          ],
+          "empty": false
+        }
+      ],
+      "empty": false
+    },
+    {
+      "title": "Գ.2. ԼՐԱՑՈՒՑԻՉ ՏԵՂԵԿՈՒԹՅՈՒՆՆԵՐ",
+      "category": "IncomeAdditionalInformation",
+      "rows": [
+        {
+          "cells": [
+            {
+              "type": "STRING",
+              "title": "",
+              "value": "Պաշտպանված",
+              "properties": {
+                "type": "STRING",
+                "xs": 12,
+                "s": 12,
+                "m": 12
+              }
+            }
+          ],
+          "empty": false
+        }
+      ],
+      "empty": false
+    }
+  ],
+  "empty": false
+}

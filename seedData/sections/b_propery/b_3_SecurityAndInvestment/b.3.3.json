@@ -1,0 +1,56 @@
+{
+  "type": "TABLE",
+  "title": "Բ.3.3. Պարտքային և այլ արժեթղթեր",
+  "value": {
+    "headerItems": [
+      {
+        "name": "NN ը/կ",
+        "isNumbering": true,
+        "colSpan": 1
+      },
+      {
+        "name": "Հայտարարատու սեփականատիրոջ անունը, ազգանունը, հայրանունը",
+        "isNumbering": false,
+        "colSpan": 1
+      },
+      {
+        "name": "Արժեթղթի տեսակը",
+        "isNumbering": false,
+        "colSpan": 1
+      },
+      {
+        "name": "Ձեռքբերման ամսաթիվը",
+        "isNumbering": false,
+        "colSpan": 1
+      },
+      {
+        "name": "Ձեռք բերելու եղանակը",
+        "isNumbering": false,
+        "colSpan": 1
+      },
+      {
+        "name": "Գործարքի մյուս կողմի անվանումը կամ անունը, ազգանունը, հայրանունը, հասցեն",
+        "isNumbering": false,
+        "colSpan": 1
+      },
+      {
+        "name": "Կողմերի միջև առկա կապի բնույթը",
+        "isNumbering": false,
+        "colSpan": 1
+      },
+      {
+        "name": "Պաշտոնի ստանձնման կամ դադարեցման օրվա դրությամբ առկա պարտքային և այլ  արժեթղթերի արժեքը(գինը) և արժույթը",
+        "isNumbering": false,
+        "colSpan": 1
+      }
+    ],
+    "rows": [],
+    "footerItems": []
+  },
+  "properties": {
+    "type": "TABLE",
+    "xs": 12,
+    "s": 12,
+    "m": 12
+  }
+}
