@@ -112,8 +112,10 @@ export const RiskIndicatorsPage = () => {
   const riskIndicatorsQuery = useQuery({
     queryKey: ["risk-indicators"],
     queryFn: async () => {
-      await new Promise((resolve) => setTimeout(resolve, 1000));
-      return [...d];
+      const response = await fetch('/api/weights/all');
+      const data = await response.json();
+
+      return data;
     },
   });
 
