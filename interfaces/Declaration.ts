@@ -36,7 +36,7 @@ export interface DeclarationDefails {
     header: string;
     general: A_GeneralSection;
     property: B_PropertySection;
-    income: C_IncomeSection;
+    income: C_IncomeSection | null;
     interests: D_InterestsSection | null;
     expense: E_ExpenseSection | null;
 }

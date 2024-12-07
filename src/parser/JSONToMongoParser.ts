@@ -1,6 +1,8 @@
 import fs from 'fs';
 import { client } from '../db/mongoClient';
 import { Declaration } from '../../interfaces/Declaration';
+import * as path from 'path';
+import { parseDetails } from './parseDetails';
 const { chain } = require('stream-chain');
 const { parser } = require('stream-json');
 const { streamArray } = require('stream-json/streamers/StreamArray');
@@ -66,9 +68,13 @@ export class JSONToMongoParser {
           streamArray()
         ]);
 
+        // let count = 0;
+
         pipeline.on('data', async (data: { key: number; value: any }) => {
           const item = data.value; // Parsed JSON object
           const declarant = generalMap.get(item.id);
+
+          const details = parseDetails(item);
 
           const declaration = {
             id: item.id,
@@ -81,8 +87,10 @@ export class JSONToMongoParser {
             submissionDate: declarant.submissionDate,
             type: declarant.type,
             year: declarant.year,
-            defails: {}
+            defails: details
           }
+
+          // fs.writeFileSync(path.join(__dirname, `${count++}.json`), JSON.stringify(declaration, null, 2));
 
           try {
             // Insert the item into MongoDB

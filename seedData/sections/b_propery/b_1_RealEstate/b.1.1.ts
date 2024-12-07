@@ -14,7 +14,7 @@ export interface b_1_1_RealEstateRow {
     acquisitionMethod: string; // "Անշարժ գույքը ձեռք բերելու եղանակը"
 }
 
-export const parseRealEstateRows = (rows: any[]): b_1_1_RealEstateRow[] => {
+export function parseRealEstateRows(rows: any[]): b_1_1_RealEstateRow[] {
     return rows.map((row) => ({
         numbering: row[0] || null,
         ownerName: row[1] || "",
