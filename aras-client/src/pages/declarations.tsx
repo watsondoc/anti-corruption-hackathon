@@ -7,7 +7,6 @@ import {
 } from "@tanstack/react-table";
 import {
   Box,
-  Button,
   Card,
   CardContent,
   Input,
@@ -179,8 +178,9 @@ const departmentOptions = [
   "Parks and Recreation",
 ];
 
-const defaultYear = 'All years';
-const yearOptions = ['All years', "2021", "2022", "2023", "2024"];
+const defaultYear = '2024';
+const yearOptions = ["2021", "2022", "2023", "2024"];
+yearOptions.reverse();
 
 const defaultQuery = '';
 const defaultData: Declaration[] = [];
@@ -241,13 +241,13 @@ export const DeclarationsPage = () => {
     queryFn: async () => {
       console.log('fetching data', page, pageSize, filters );
       await new Promise((resolve) => setTimeout(resolve, 1000));
-      return data;
+      return { data, total: data.length };
     },
   });
 
   const table = useReactTable({
     columns,
-    data: declarations.data ?? defaultData,
+    data: declarations.data?.data ?? defaultData,
     getCoreRowModel: getCoreRowModel(),
     getPaginationRowModel: getPaginationRowModel(),
     initialState: {
@@ -275,17 +275,21 @@ export const DeclarationsPage = () => {
       }}/>
       <Card sx={{ p: 0, gap: 0 }}>
         <ArasTable 
+          table={table}
+
           onNextPage={() => setPage(page + 1)}
           onPrevPage={() => setPage(page - 1)}
           onPageSizeChange={(size) => { 
             setPageSize(size);
             setPage(1);
           }}
+          paginationType="manual"
           hasNext={true}
           hasPrev={true}
-          table={table}
-          manualPagination={true}
+          pageSize={pageSize}
+          currentPage={page}
           isLoading={declarations.isLoading} 
+          totalItems={declarations.data?.total}
         />
       </Card>
     </Layout>
