@@ -1,11 +1,28 @@
 import { Table } from "@mui/joy";
 import { flexRender, Table as TableType } from "@tanstack/react-table";
 
-interface TableProps<T> {
+export interface Record {
+    risk?: number;
+}
+
+interface TableProps<T extends Record> {
     table: TableType<T>;
 }
 
-export const ArasTable = <T,>({table}: TableProps<T>) => {
+export const getRiskClass = (risk?: number): string | undefined => {
+    if (!risk || risk < 0 || risk > 1) {
+        return;
+    }
+    
+    const riskType = Math.round(risk * 4);
+    if (riskType == 0) {
+        return undefined
+    }
+
+    return `danger-${riskType}`;
+};
+
+export const ArasTable = <T extends Record,>({table}: TableProps<T>) => {
     return <Table
         borderAxis="xBetween"
         color="neutral"
@@ -28,7 +45,7 @@ export const ArasTable = <T,>({table}: TableProps<T>) => {
         </thead>
         <tbody>
         {table.getRowModel().rows.map(row => (
-            <tr key={row.id}>
+            <tr key={row.id} className={getRiskClass(row.original.risk)}>
             {row.getVisibleCells().map(cell => (
                 <td key={cell.id}>
                 {flexRender(cell.column.columnDef.cell, cell.getContext())}

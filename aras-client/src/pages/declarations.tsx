@@ -24,21 +24,21 @@ const data: Declaration[] = [
         name: 'John Doe', 
         position: 'Mayor', 
         declarationDate: '2023-01-15',
-        risk: 0.87,
+        risk: 1,
     },
     { 
         id: '2', 
         name: 'Jane Smith', 
         position: 'Council Member', 
         declarationDate: '2023-02-10',
-        risk: 0.56,
+        risk: 0.78,
     },
     { 
         id: '3', 
         name: 'Alice Johnson', 
         position: 'Treasurer', 
         declarationDate: '2023-03-05',
-        risk: 0.45,
+        risk: 0.56,
     },
     { 
         id: '4', 
@@ -52,7 +52,14 @@ const data: Declaration[] = [
         name: 'Charlie Davis', 
         position: 'Chief of Staff', 
         declarationDate: '2023-05-20',
-        risk: 0.1,
+        risk: 0.25,
+    },
+    { 
+        id: '6', 
+        name: 'David Wilson', 
+        position: 'Deputy Mayor', 
+        declarationDate: '2023-05-20',
+        risk: 0.01,
     },
 ];
 
