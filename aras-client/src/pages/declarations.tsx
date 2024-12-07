@@ -14,6 +14,7 @@ import {
   Link,
   List,
   ListItem,
+  Stack,
   Typography,
 } from "@mui/joy";
 import { Layout } from "../components/layout";
@@ -22,7 +23,7 @@ import { ArasSelect } from "../components/select";
 import { formatCurrency } from "../utils";
 import { HOME, DECLARATIONS } from "../breadcrumbs";
 import { useQuery } from "react-query";
-import { useMemo, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import debounce from "debounce";
 
 interface Declaration {
@@ -168,78 +169,151 @@ const SearchInput = (props: InputProps) => {
   return <Input {...props} placeholder="Search..." />;
 };
 
-const defaultDepartment = 'All departments';
-const departmentOptions = [
-  'All departments',
-  "Finance",
-  "Human Resources",
-  "Legal",
-  "Public Works",
-  "Parks and Recreation",
+const defaultInstitution = "All";
+const institutionOptions = [
+  defaultInstitution,
+  "ՀՀ Նախագահ",
+  "Գործադիր իշխանություն",
+  "Օրենսդիր իշխանություն",
+  "Դատական իշխանություն",
+  "Տեղական ինքնակառավարման մարմիններ",
+  "Ինքնավար և անկախ մարմիններ",
+  "Այլ",
 ];
 
-const defaultYear = '2024';
+const defaultDeclarantType = "All";
+const declarantTypeOptions = [
+  defaultDeclarantType,
+  "Ընտանիքի անդամ",
+  "Պաշտոնատար անձ",
+];
+
+const defaultDeclarationType = "All";
+const declarationTypeOptions = [
+  defaultDeclarationType,
+  "Ստանձնելու",
+  "Դադարեցնելու",
+];
+
+const defaultYear = "2024";
 const yearOptions = ["2021", "2022", "2023", "2024"];
 yearOptions.reverse();
 
-const defaultQuery = '';
+const defaultQuery = "";
 const defaultData: Declaration[] = [];
 
 interface FilterProps {
-  onFiltersChange: (year: string, department: string, query: string) => void;
+  onFiltersChange: (
+    query: string, 
+    year: string, 
+    declarationType: string,
+    declarantType: string,
+    institutionType: string
+  ) => void;
 }
 
 export const Filters = ({ onFiltersChange }: FilterProps) => {
-  const [year, setYear] = useState<string>(defaultYear);
-  const [department, setDepartment] = useState<string>(defaultDepartment);
   const [query, setQuery] = useState(defaultQuery);
+  const [year, setYear] = useState<string>(defaultYear);
+  const [declarantType, setDeclarantType] = useState(defaultDeclarantType);
+  const [declarationType, setDeclarationType] = useState(
+    defaultDeclarationType
+  );
+  const [institutionType, setInstitutionType] =
+    useState<string>(defaultInstitution);
 
-  const handleFiltersChange = useMemo(() => {
-    return debounce((year: string, department: string, query: string) => {
-      onFiltersChange(year, department, query);
-    }, 400);
-  }, [onFiltersChange])
+  const handleFiltersChange = useMemo(
+    () =>
+      debounce((
+        query: string, 
+        year: string, 
+        declarationType: string,
+        declarantType: string,
+        institutionType: string,
+      ) => {
+        onFiltersChange(query, year, declarationType, declarantType, institutionType);
+      }),
+    [onFiltersChange]
+  );
 
-  return <Box mt={2} display="flex" gap={1} alignItems="end" flexWrap="wrap">
-    <Box flex="1 0 250px">
-      <SearchInput onChange={(e) => {
-        const q = e.target.value || defaultQuery;
-        setQuery(q);
-        handleFiltersChange(year, department, q);
-      }}/>
-    </Box>
-    <Box flex="0 0 200px">
-      <ArasSelect 
-        label="Declaration year" 
-        options={yearOptions} 
-        onChange={(_e, v) => {
-          const y = v || defaultYear;
-          setYear(y);
-          handleFiltersChange(y, department, query);
-        }}/>
-    </Box>
-    <Box flex="0 0 200px">
-      <ArasSelect 
-        label="Department" 
-        options={departmentOptions}  
-        onChange={(_e, v) => {
-          const d = v || defaultDepartment;
-          setDepartment(d)
-          handleFiltersChange(year, d, query);
-      }}/>
-    </Box>
-  </Box>
-}
+  useEffect(() => {
+    handleFiltersChange(query, year, declarationType, declarantType, institutionType);
+  }, [query, year, declarationType, declarantType, institutionType, onFiltersChange]);
+
+  return (
+    <Stack mt={2} direction="column" gap={2}>
+      <Stack gap={1} alignItems="end" direction="row">
+        <Box flex="1 1">
+          <SearchInput
+            onChange={(e) => {
+              const q = e.target.value || defaultQuery;
+              setQuery(q);
+            }}
+          />
+        </Box>
+        <Box flex="0 1 120px">
+          <ArasSelect
+            label="Declaration year"
+            options={yearOptions}
+            onChange={(_e, v) => {
+              const y = v || defaultYear;
+              setYear(y);
+            }}
+          />
+        </Box>
+      </Stack>
+      <Stack gap={1} alignItems="end" direction="row">
+        <Box flex="1 1 200px">
+          <ArasSelect
+            label="Declaration Type"
+            options={declarationTypeOptions}
+            onChange={(_e, v) => {
+              const d = v || defaultDeclarationType;
+              setDeclarationType(d);
+            }}
+          />
+        </Box>
+        <Box flex="1 1 200px">
+          <ArasSelect
+            label="Declarant Type"
+            options={declarantTypeOptions}
+            onChange={(_e, v) => {
+              const d = v || defaultDeclarantType;
+              setDeclarantType(d);
+            }}
+          />
+        </Box>
+
+        <Box flex="1 1 200px">
+          <ArasSelect
+            label="Institution Group"
+            options={institutionOptions}
+            onChange={(_e, v) => {
+              const d = v || defaultInstitution;
+              setInstitutionType(d);
+            }}
+          />
+        </Box>
+      </Stack>
+    </Stack>
+  );
+};
 
 export const DeclarationsPage = () => {
   const [page, setPage] = useState(1);
   const [pageSize, setPageSize] = useState(10);
-  const [filters, setFilters] = useState({ year: defaultYear, department: defaultDepartment, query: defaultQuery });
-  
+  const [filters, setFilters] = useState({
+    query: defaultQuery,
+    year: defaultYear,
+    declarationType: defaultDeclarationType,
+    declarantType: defaultDeclarantType,
+    institution: defaultInstitution,
+  });
+
   const declarations = useQuery({
     queryKey: ["declarations", { filters, pageSize, page }],
     queryFn: async () => {
-      console.log('fetching data', page, pageSize, filters );
+      console.log("fetching data", page, pageSize, filters);
       await new Promise((resolve) => setTimeout(resolve, 1000));
       return { data, total: data.length };
     },
@@ -269,17 +343,18 @@ export const DeclarationsPage = () => {
           </List>
         </CardContent>
       </Card>
-      <Filters onFiltersChange={(year, department, query) => {
-        setFilters({ year, department, query });
-        setPage(1);
-      }}/>
+      <Filters
+        onFiltersChange={(query, year, declarationType, declarantType, institution ) => {
+          setFilters({ query, year, declarationType, declarantType, institution });
+          setPage(1);
+        }}
+      />
       <Card sx={{ p: 0, gap: 0 }}>
-        <ArasTable 
+        <ArasTable
           table={table}
-
           onNextPage={() => setPage(page + 1)}
           onPrevPage={() => setPage(page - 1)}
-          onPageSizeChange={(size) => { 
+          onPageSizeChange={(size) => {
             setPageSize(size);
             setPage(1);
           }}
@@ -288,7 +363,7 @@ export const DeclarationsPage = () => {
           hasPrev={true}
           pageSize={pageSize}
           currentPage={page}
-          isLoading={declarations.isLoading} 
+          isLoading={declarations.isLoading}
           totalItems={declarations.data?.total}
         />
       </Card>
