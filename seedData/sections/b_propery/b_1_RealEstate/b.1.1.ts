@@ -1,3 +1,6 @@
+import { ValueClass } from "../../../../src/parser/originalInterfaces";
+import { fillRows, FillRowsResult, TargetToRealColumnNames } from "../../../../seedData/sections/tools/RowsSearcher";
+
 export interface b_1_1_RealEstateRow {
     numbering: number | null; // "NN ը/կ"
     ownerName: string; // "Հայտարարատու սեփականատիրոջ անունը, ազգանունը, հայրանունը"
@@ -14,20 +17,26 @@ export interface b_1_1_RealEstateRow {
     acquisitionMethod: string; // "Անշարժ գույքը ձեռք բերելու եղանակը"
 }
 
-export function parseRealEstateRows(rows: any[]): b_1_1_RealEstateRow[] {
-    return rows.map((row) => ({
-        numbering: row[0] || null,
-        ownerName: row[1] || "",
-        propertyType: row[2] || "",
-        ownershipType: row[3] || "",
-        ownerShare: row[4] || "",
-        coOwnerShare: row[5] || "",
-        coOwnerName: row[6] || "",
-        relationshipWithCoOwner: row[7] || "",
-        locationAddress: row[8] || "",
-        registrationNumber: row[9] || "",
-        propertyArea: row[10] || "",
-        acquisitionYear: row[11] || "",
-        acquisitionMethod: row[12] || "",
-    }));
+export function parseRealEstateRows(vc: ValueClass): FillRowsResult<b_1_1_RealEstateRow> {
+
+    const names: TargetToRealColumnNames = {
+        // some random shit: "Գործարքի մյուս կողմի անվանումը կամ անունը, ազգանունը, հայրանունը, հասցեն" ==  Name or first name, surname, patronymic, address of the other party to the transaction.
+        // "Ձեռք բերված անշարժ գույքի գինը և արժույթը" = The price and currency of the acquired real estate
+        numbering: ["NN ը/կ"], // "NN ը/կ"
+        ownerName: ["Հայտարարատու սեփականատիրոջ անունը, ազգանունը, հայրանունը"], // "Հայտարարատու սեփականատիրոջ անունը, ազգանունը, հայրանունը"
+        propertyType: ["Անշարժ գույքի տեսակը"], // "Անշարժ գույքի տեսակը"
+        ownershipType: ["Սեփականության իրավունքի տեսակը"], // "Սեփականության իրավունքի տեսակը"
+        ownerShare: ["Հայտարարատու սեփականատիրոջ բաժինը"], // "Հայտարարատու սեփականատիրոջ բաժինը"
+        coOwnerShare: ["Համասեփականատիրոջ բաժինը"], // "Համասեփականատիրոջ բաժինը"
+        coOwnerName: ["Համասեփականատիրոջ անվանումը կամ անունը, ազգանունը, հայրանունը"], // "Համասեփականատիրոջ անվանումը կամ անունը, ազգանունը, հայրանունը"
+        relationshipWithCoOwner: ["Հայտարարատուի և համասեփականատիրոջ միջև առկա կապի բնույթը", "Հայտարարատուի և համասեփականատիրոջ միջև կապի բնույթը"], // "Հայտարարատուի և համասեփականատիրոջ միջև առկա կապի բնույթը"
+        locationAddress: ["Գտնվելու վայրի հասցեն"], // "Գտնվելու վայրի հասցեն"
+        registrationNumber: ["Անշարժ գույքի հաշվառման համարը"], // "Անշարժ գույքի հաշվառման համարը"
+        propertyArea: ["Անշարժ գույքի մակերեսը", "Անշարժ գույքի մակերեսը (քմ)"], // "Անշարժ գույքի մակերեսը"
+        acquisitionYear: ["Անշարժ գույքը ձեռք բերելու տարին", "Անշարժ գույքը ձեռք բերելու օրը, ամիսը, տարին"], // "Անշարժ գույքը ձեռք բերելու տարին"
+        // Անշարժ գույքը ձեռք բերելու օրը, ամիսը,տարին == The day, month, year of acquiring the real estate
+        acquisitionMethod: ["Անշարժ գույքը ձեռք բերելու եղանակը", "Անշարժ գույքի ձեռքբերման եղանակը"] // "Անշարժ գույքը ձեռք բերելու եղանակը"
+    };
+
+    return fillRows(names, vc);
 };

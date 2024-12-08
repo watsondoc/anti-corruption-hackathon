@@ -3,6 +3,7 @@ import dotenv from "dotenv";
 import exampleRoutes from "./routes/webRoutes";
 import weightRoutes from './routes/weightRoutes';
 import declarationsRouter from './routes/declarationsRouter';
+import declarantsRouter from './routes/declarantsRouter';
 import { connectToDatabase } from "./db/mongoClient";
 import { JSONToMongoParser } from './parser/JSONToMongoParser';
 import * as path from 'path';
@@ -19,9 +20,10 @@ const port = process.env.PORT || 3000;
 app.use(express.json());
 app.use("/api", exampleRoutes);
 app.use("/api/declarations", declarationsRouter);
+app.use('/api/declarants', declarantsRouter);
 app.use("/api/weights", weightRoutes);
 
-app.use((err: any, req: any, res: any, next: any) => {
+app.use('/', (err: any, req: any, res: any, next: any) => {
   console.error(
     `[${new Date().toLocaleString()}] ${req.method} ${req.originalUrl} - ${err.message}`,
     err.stack
@@ -67,3 +69,11 @@ const startServer = async () => {
 };
 
 startServer();
+
+process.on("unhandledRejection", (err) => {
+  console.error(err);
+});
+
+process.on("uncaughtException", (err) => {
+  console.error(err);
+});

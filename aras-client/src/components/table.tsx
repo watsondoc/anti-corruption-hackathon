@@ -5,11 +5,11 @@ import { FaAngleLeft, FaAngleRight } from "react-icons/fa";
 import { getRiskClass } from "../utils";
 import { ArasSelect } from "./select";
 
-export interface Record {
-  risk?: number;
+export interface Row {
+  riskRating?: number;
 }
 
-interface TableProps<T extends Record> {
+interface TableProps<T extends Row> {
   table: TableType<T>;
   paginationType?: 'manual' | 'auto' | 'off';
   isLoading?: boolean;
@@ -93,7 +93,7 @@ export const Pagination = ({
 
 const PAGE_SIZES = [10, 20, 30, 40, 50];
 
-export const ArasTable = <T extends Record>({
+export const ArasTable = <T extends Row>({
   table,
   isLoading,
   paginationType = 'auto',
@@ -136,7 +136,7 @@ export const ArasTable = <T extends Record>({
               </tr>
             )}
             {table.getRowModel().rows.map((row) => (
-              <tr key={row.id} className={getRiskClass(row.original.risk)}>
+              <tr key={row.id} className={getRiskClass(row.original.riskRating)}>
                 {row.getVisibleCells().map((cell) => (
                   <td key={cell.id} className="cell">
                     {flexRender(cell.column.columnDef.cell, cell.getContext())}
@@ -168,6 +168,7 @@ export const ArasTable = <T extends Record>({
           <Pagination
             pageOptions={PAGE_SIZES}
             onPageSizeChange={(pageSize: number) => {
+              table.setPageSize(pageSize);
               props.onPageSizeChange?.(pageSize);
             }}
             hasNext={props.hasNext || false}

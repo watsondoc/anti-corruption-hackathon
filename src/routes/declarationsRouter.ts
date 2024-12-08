@@ -3,10 +3,11 @@ import { declarationsService } from '../services/DeclarationsService';
 
 const router = express.Router();
 
-const toApiModel = ({
+export const toApiModel = ({
     id,
     name,
     declarant,
+    declarantId,
     declarantType,
     institutionGroup,
     institution,
@@ -14,18 +15,40 @@ const toApiModel = ({
     submissionDate,
     year,
     type,
-}: Record<string, any>) => ({
-    id,
-    name,
-    declarant,
-    declarantType,
-    institutionGroup,
-    institution,
-    position,
-    submissionDate,
-    year,
-    type,
-});
+    risk,
+    incomeAgg,
+}: Record<string, any>) => {
+    const riskIndicators = [];
+
+    if (risk?.QPDRI?.QPDRI === 1) {
+        riskIndicators.push("Quantitative deviation of owned/occupied property from the average");
+    }
+
+    let income = 0;
+
+    for (const key in incomeAgg) {
+        income += incomeAgg[key];
+    }
+
+    return {
+        id,
+        name,
+        declarant,
+        declarantId,
+        declarantType,
+        institutionGroup,
+        institution,
+        position,
+        submissionDate,
+        year,
+        type,
+        risk,
+        riskIndicators,
+        riskRating: risk?.QPDRI?.QPDRI ?? 0,
+        income,
+        incomeAgg,
+    }
+}
 
 const parseQueryOptions = (query: Record<string, any>) => {
     const { limit: queryLimit, skip: querySkip, ...filters } = query;
@@ -46,15 +69,21 @@ const parseQueryOptions = (query: Record<string, any>) => {
 }
 
 router.get("/", async (req, res) => {
-    const { limit, skip, filters } = parseQueryOptions(req.query);
+    try {
+        console.log('GET /api/declarations');
+        const { limit, skip, filters } = parseQueryOptions(req.query);
 
-    const declarations = await declarationsService.getAllDeclarations({ limit, skip, filters: filters as any });
-    const total = await declarationsService.countDeclarations({ filters: filters as any});
-
-    res.send({
-        data: declarations.map(toApiModel),
-        total,
-    });
+        const declarations = await declarationsService.getAllDeclarations({ limit, skip, filters: filters as any });
+        const total = await declarationsService.countDeclarations({ filters: filters as any});
+    
+        res.send({
+            data: declarations.map(toApiModel),
+            total,
+        });
+    } catch (error) {
+        console.error(error);
+        res.status(500).send({ message: "Internal server error", error });
+    }
 });
 
 export default router;

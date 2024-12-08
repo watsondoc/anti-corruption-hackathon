@@ -18,6 +18,7 @@ export const formatCurrency = (value: number | string): string => {
 
     return value.toLocaleString("en-US", {
         style: "currency",
-        currency: "USD",
+        currencyDisplay: "narrowSymbol",
+        currency: "AMD",
     });
 };

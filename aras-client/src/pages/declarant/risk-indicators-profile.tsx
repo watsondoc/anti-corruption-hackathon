@@ -1,24 +1,24 @@
 import { Card, Box, Typography, CardContent, List, ListItem } from "@mui/joy";
-import { PublicOfficial } from "./type";
+import { Declaration } from "../declarations";
 
 interface RiskIndicatorsProfileProps {
-    publicOfficial: PublicOfficial;
+    declaration: Declaration;
 }
 
-export const RiskIndicatorsProfile = ({ publicOfficial }: RiskIndicatorsProfileProps) => {
+export const RiskIndicatorsProfile = ({ declaration }: RiskIndicatorsProfileProps) => {
     return <Card variant="outlined" sx={{ flex: "1 1", minWidth: 300 }}>
       <Box display="flex" justifyContent="space-between">
         <Typography level="title-md">Risk indicators:</Typography>
         <Typography level="title-md">
           Risk Rating:
           <Typography ml={1} level="title-md" color="danger" component="span">
-            {publicOfficial.risk}
+            {declaration.riskRating}
           </Typography>
         </Typography>
       </Box>
       <CardContent>
         <List marker="disc">
-          {publicOfficial.riskIndicators.map((indicator, index) => (
+          {(declaration.riskIndicators || []).map((indicator, index) => (
             <ListItem key={index}>{indicator}</ListItem>
           ))}
         </List>

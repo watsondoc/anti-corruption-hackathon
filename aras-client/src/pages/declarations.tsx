@@ -14,7 +14,7 @@ import {
   Stack,
 } from "@mui/joy";
 import { Layout } from "../components/layout";
-import { ArasTable } from "../components/table";
+import { ArasTable, Row } from "../components/table";
 import { ArasSelect } from "../components/select";
 import { formatCurrency } from "../utils";
 import { HOME, DECLARATIONS } from "../breadcrumbs";
@@ -22,10 +22,11 @@ import { useQuery } from "react-query";
 import { useCallback, useEffect, useMemo, useState } from "react";
 import debounce from "debounce";
 
-interface Declaration {
+export interface Declaration extends Row {
   id: string;
+  declarantId: number;
 
-  year: string;
+  year: number;
   type: string;
 
   declarantType: string;
@@ -35,84 +36,14 @@ interface Declaration {
   institutionGroup: string;
   institution: string;
   
-  risk: number;
   income: number;
-}
+  assets: number;
 
-const data: Declaration[] = [
-  {
-    id: "1",
-    year: "2023",
-    type: "Annual",
-    declarantType: "Official",
-    declarant: "John Doe",
-    position: "Mayor",
-    institutionGroup: "Local Government",
-    institution: "City Hall",
-    risk: 1,
-    income: 98000,
-  },
-  {
-    id: "2",
-    year: "2024",
-    type: "Annual",
-    declarantType: "Official",
-    declarant: "Jane Smith",
-    position: "Council Member",
-    institutionGroup: "Local Government",
-    institution: "City Council",
-    risk: 0.78,
-    income: 88000,
-  },
-  {
-    id: "3",
-    year: "2023",
-    type: "Annual",
-    declarantType: "Official",
-    declarant: "Alice Johnson",
-    position: "Treasurer",
-    institutionGroup: "Local Government",
-    institution: "City Treasury",
-    risk: 0.56,
-    income: 93000,
-  },
-  {
-    id: "4",
-    year: "2024",
-    type: "Annual",
-    declarantType: "Relative",
-    declarant: "Bob Brown",
-    position: "Secretary",
-    institutionGroup: "Local Government",
-    institution: "City Hall",
-    risk: 0.32,
-    income: 83000,
-  },
-  {
-    id: "5",
-    year: "2023",
-    type: "Annual",
-    declarantType: "Official",
-    declarant: "Charlie Davis",
-    position: "Chief of Staff",
-    institutionGroup: "Local Government",
-    institution: "City Hall",
-    risk: 0.25,
-    income: 91000,
-  },
-  {
-    id: "6",
-    year: "2023",
-    type: "Annual",
-    declarantType: "Official",
-    declarant: "David Wilson",
-    position: "Deputy Mayor",
-    institutionGroup: "Local Government",
-    institution: "City Hall",
-    risk: 0.01,
-    income: 95000,
-  },
-];
+  risk: any;
+  riskRating: number;
+  riskIndicators: string[];
+  incomeAgg: Record<string, number>;
+}
 
 const columnHelper = createColumnHelper<Declaration>();
 
@@ -131,7 +62,7 @@ const columns = [
     header: "Declarant",
     cell: ({ cell, row }) => {
       return (
-        <Link component={RouterLink} to={`/declarant/${row.original.id}`}>
+        <Link component={RouterLink} to={`/declarant/${row.original.declarantId}`}>
           {cell.getValue()}
         </Link>
       );
@@ -153,9 +84,9 @@ const columns = [
     cell: (info) => info.getValue(),
     size: 250,
   }),
-  columnHelper.accessor("risk", {
+  columnHelper.accessor("riskRating", {
     header: "Risk Rating",
-    cell: (risk) => risk.getValue() ?? 0,
+    cell: (riskRating) => riskRating.getValue() ?? 0,
     size: 100,
   }),
   columnHelper.accessor("income", {

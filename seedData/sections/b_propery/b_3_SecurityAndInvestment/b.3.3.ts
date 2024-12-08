@@ -1,3 +1,7 @@
+import { fillRows } from "../../../../seedData/sections/tools/RowsSearcher";
+import { FillRowsResult } from "../../../../seedData/sections/tools/RowsSearcher";
+import { ValueClass } from "../../../../src/parser/originalInterfaces";
+
 export interface b_3_3_DeclarantDebtSecurities {
     numbering: number | null; // "NN ը/կ"
     declarantName: string; // "Հայտարարատու սեփականատիրոջ անունը, ազգանունը, հայրանունը"
@@ -10,16 +14,19 @@ export interface b_3_3_DeclarantDebtSecurities {
 }
 
 export const parseDeclarantDebtSecurities = (
-    rows: any[]
-): b_3_3_DeclarantDebtSecurities[] => {
-    return rows.map((row) => ({
-        numbering: parseInt(row[0], 10) || null,
-        declarantName: row[1] || "",
-        securityType: row[2] || "",
-        acquisitionDate: row[3] || "",
-        acquisitionMethod: row[4] || "",
-        counterpartyInfo: row[5] || "",
-        relationshipNature: row[6] || "",
-        currentValue: row[7] || "",
-    }));
+    vc: ValueClass
+): FillRowsResult<b_3_3_DeclarantDebtSecurities> => {
+
+    const names = {
+        numbering: ["NN ը/կ"],
+        declarantName: ["Հայտարարատու սեփականատիրոջ անունը, ազգանունը, հայրանունը"],
+        securityType: ["Արժեթղթի տեսակը"],
+        acquisitionDate: ["Ձեռքբերման ամսաթիվը"],
+        acquisitionMethod: ["Ձեռք բերելու եղանակը"],
+        counterpartyInfo: ["Գործարքի մյուս կողմի անվանումը կամ անունը, ազգանունը, հայրանունը, հասցեն"],
+        relationshipNature: ["Կողմերի միջև առկա կապի բնույթը"],
+        currentValue: ["Պաշտոնի ստանձնման կամ դադարեցման օրվա դրությամբ առկա պարտքային և այլ արժեթղթերի արժեքը(գինը) և արժույթը"],
+    }
+
+    return fillRows(names, vc);
 };

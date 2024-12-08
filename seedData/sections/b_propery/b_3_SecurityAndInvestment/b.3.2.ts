@@ -1,3 +1,6 @@
+import { fillRows, FillRowsResult } from "../../../../seedData/sections/tools/RowsSearcher";
+import { ValueClass } from "../../../../src/parser/originalInterfaces";
+
 export interface b_3_2_DeclarantThirdPartyInvestments {
     numbering: number | null; // "NN ը/կ"
     declarantName: string; // "Հայտարարատուի անունը, ազգանունը, հայրանունը"
@@ -10,16 +13,19 @@ export interface b_3_2_DeclarantThirdPartyInvestments {
 }
 
 export const parseDeclarantThirdPartyInvestments = (
-    rows: any[]
-): b_3_2_DeclarantThirdPartyInvestments[] => {
-    return rows.map((row) => ({
-        numbering: parseInt(row[0], 10) || null,
-        declarantName: row[1] || "",
-        companyName: row[2] || "",
-        investmentType: row[3] || "",
-        currentValue: row[4] || "",
-        ownershipPercentage: row[5] || "",
-        ownerInfo: row[6] || "",
-        relationshipNature: row[7] || "",
-    }));
+    vc: ValueClass
+): FillRowsResult<b_3_2_DeclarantThirdPartyInvestments> => {
+
+    const names = {
+        numbering: ["NN ը/կ"],
+        declarantName: ["Հայտարարատուի անունը, ազգանունը, հայրանունը"],
+        companyName: ["Ընկերության լրիվ անվանումը"],
+        investmentType: ["Արժեթղթի կամ այլ ներդրման տեսակը"],
+        currentValue: ["Պաշտոնի ստանձնման կամ դադարեցման օրվա դրությամբ առկա բաժնային արժեթղթի կամ այլ ներդրման արժեքը(գինը) և արժույթը"],
+        ownershipPercentage: ["Պաշտոնի ստանձնման կամ դադարեցման օրվա դրությամբ առկա բաժնային արժեթղթի կամ այլ ներդրման բաժնեմասնակցության %"],
+        ownerInfo: ["Բաժնային արժեթղթերի և այլ ներդրումների սեփականատիրոջ անվանումը կամ անունը, ազգանունը, հայրանունը"],
+        relationshipNature: ["Հայտարարատուի և սեփականատիրոջ միջև առկա կապի բնույթը"]
+    }
+
+    return fillRows(names, vc);
 };
