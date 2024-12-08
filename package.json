@@ -16,9 +16,15 @@
   "license": "ISC",
   "dependencies": {
     "@types/jsonstream": "^0.8.33",
+    "@types/lodash.throttle": "^4.1.9",
+    "axios": "^1.7.9",
+    "csv-parser": "^3.0.0",
+    "csv-writer": "^1.6.0",
     "dotenv": "^16.4.7",
     "express": "^4.21.2",
+    "fastest-levenshtein": "^1.0.16",
     "i": "^0.3.7",
+    "lodash": "^4.17.21",
     "mongoose": "^8.8.4",
     "npm": "^10.9.2",
     "stream-json": "^1.9.1"
