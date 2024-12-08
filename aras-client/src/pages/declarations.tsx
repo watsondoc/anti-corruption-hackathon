@@ -19,7 +19,7 @@ import { ArasSelect } from "../components/select";
 import { formatCurrency } from "../utils";
 import { HOME, DECLARATIONS } from "../breadcrumbs";
 import { useQuery } from "react-query";
-import { useEffect, useMemo, useState } from "react";
+import { useCallback, useEffect, useMemo, useState } from "react";
 import debounce from "debounce";
 
 interface Declaration {
@@ -117,11 +117,6 @@ const data: Declaration[] = [
 const columnHelper = createColumnHelper<Declaration>();
 
 const columns = [
-  columnHelper.accessor("year", {
-    header: "Year",
-    cell: (info) => info.getValue(),
-    size: 50,
-  }),
   columnHelper.accessor("type", {
     header: "Type",
     cell: (info) => info.getValue(),
@@ -160,7 +155,7 @@ const columns = [
   }),
   columnHelper.accessor("risk", {
     header: "Risk Rating",
-    cell: (risk) => risk.getValue(),
+    cell: (risk) => risk.getValue() ?? 0,
     size: 100,
   }),
   columnHelper.accessor("income", {
@@ -227,9 +222,7 @@ export const Filters = ({ onFiltersChange }: FilterProps) => {
   const [institutionType, setInstitutionType] =
     useState<string>(defaultInstitution);
 
-  const handleFiltersChange = useMemo(
-    () =>
-      debounce((
+  const handleFiltersChange = useMemo(() => debounce((
         query: string, 
         year: string, 
         declarationType: string,
@@ -242,8 +235,9 @@ export const Filters = ({ onFiltersChange }: FilterProps) => {
   );
 
   useEffect(() => {
+    console.log('running effect filters');
     handleFiltersChange(query, year, declarationType, declarantType, institutionType);
-  }, [query, year, declarationType, declarantType, institutionType, onFiltersChange]);
+  }, [query, year, declarationType, declarantType, institutionType, handleFiltersChange]);
 
   return (
     <Stack direction="column" gap={2}>
@@ -318,9 +312,31 @@ export const DeclarationsPage = () => {
   const declarations = useQuery({
     queryKey: ["declarations", { filters, pageSize, page }],
     queryFn: async () => {
-      console.log("fetching data", page, pageSize, filters);
-      await new Promise((resolve) => setTimeout(resolve, 1000));
-      return { data, total: data.length };
+      const params = new URLSearchParams({
+        year: filters.year,
+        skip: ((page - 1) * pageSize).toString(),
+        limit: pageSize.toString(),
+      });
+
+      if (filters.query?.trim()) {
+        params.append("query", filters.query.trim());
+      }
+
+      if (filters.declarationType !== defaultDeclarationType) {
+        params.append("declarationType", filters.declarationType);
+      }
+
+      if (filters.declarantType !== defaultDeclarantType) {
+        params.append("declarantType", filters.declarantType);
+      }
+
+      if (filters.institution !== defaultInstitution) {
+        params.append("institution", filters.institution);
+      }
+
+      return fetch(
+        `/api/declarations?${params.toString()}`, 
+      ).then((res) => res.json());
     },
   });
 
@@ -336,6 +352,11 @@ export const DeclarationsPage = () => {
     },
   });
 
+  const onFiltersChange: FilterProps['onFiltersChange'] = useCallback((query, year, declarationType, declarantType, institution) => {
+    setFilters({ query, year, declarationType, declarantType, institution });
+    setPage(1);
+  }, [setFilters, setPage]);
+
   return (
     <Layout title="Declarations" breadcrumbs={[HOME, DECLARATIONS]}>
       {/* <Card sx={{ maxWidth: "300px" }}>
@@ -349,10 +370,7 @@ export const DeclarationsPage = () => {
         </CardContent>
       </Card> */}
       <Filters
-        onFiltersChange={(query, year, declarationType, declarantType, institution ) => {
-          setFilters({ query, year, declarationType, declarantType, institution });
-          setPage(1);
-        }}
+        onFiltersChange={onFiltersChange}
       />
       <Card sx={{ p: 0, gap: 0 }}>
         <ArasTable
