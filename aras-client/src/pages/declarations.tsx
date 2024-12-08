@@ -14,7 +14,7 @@ import {
   Stack,
 } from "@mui/joy";
 import { Layout } from "../components/layout";
-import { ArasTable } from "../components/table";
+import { ArasTable, Row } from "../components/table";
 import { ArasSelect } from "../components/select";
 import { formatCurrency } from "../utils";
 import { HOME, DECLARATIONS } from "../breadcrumbs";
@@ -22,7 +22,7 @@ import { useQuery } from "react-query";
 import { useCallback, useEffect, useMemo, useState } from "react";
 import debounce from "debounce";
 
-interface Declaration {
+export interface Declaration extends Row {
   id: string;
   declarantId: number;
 
@@ -36,8 +36,13 @@ interface Declaration {
   institutionGroup: string;
   institution: string;
   
-  risk: number;
   income: number;
+  assets: number;
+
+  risk: any;
+  riskRating: number;
+  riskIndicators: string[];
+  incomeAgg: Record<string, number>;
 }
 
 const columnHelper = createColumnHelper<Declaration>();
@@ -79,9 +84,9 @@ const columns = [
     cell: (info) => info.getValue(),
     size: 250,
   }),
-  columnHelper.accessor("risk", {
+  columnHelper.accessor("riskRating", {
     header: "Risk Rating",
-    cell: (risk) => (risk.getValue() as any)?.QPDRI?.QPDRI ?? 0,
+    cell: (riskRating) => riskRating.getValue() ?? 0,
     size: 100,
   }),
   columnHelper.accessor("income", {

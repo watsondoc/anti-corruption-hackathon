@@ -19,6 +19,7 @@ router.get("/:declarantId/declarations", async (req, res) => {
         const data = await declarationsService.getDeclarationsByDeclarantId(parseInt(declarantId, 10))
         res.send(data.map(toApiModel));
     } catch (error) {
+        console.error(error);
         res.status(500).send({ message: 'Internal server error', error });
     }
 });
