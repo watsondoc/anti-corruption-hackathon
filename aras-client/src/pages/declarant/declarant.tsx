@@ -9,6 +9,7 @@ import { Declaration } from "../declarations";
 import { RiskIndicatorsProfile } from "./risk-indicators-profile";
 import { IncomeTable } from "./income-table";
 import { ArasSelect2 } from "../../components/select2";
+import { Charts } from "./charts";
 
 export const DeclarantPage: React.FC = () => {
   const declarantId = useParams().id!;
@@ -24,15 +25,22 @@ export const DeclarantPage: React.FC = () => {
       ).then((res) => res.json());
 
       if (data.length > 0) {
-        setDeclaration(data[0]);
+        setDeclaration(data[data.length - 1]);
       }
 
       return data as Declaration[];
     },
   });
 
-  const publicOfficial = publicOfficialQuery.data;
+  const declarations = publicOfficialQuery.data;
   const fullName = declaration?.declarant ?? "";
+
+  const incomeByYear = declarations?.map((declaration) => ({
+    year: declaration.year,
+    value: declaration.income,
+  })) ?? [];
+
+  console.log('Income by year:', incomeByYear);
 
   return (
     <Layout
@@ -84,8 +92,13 @@ export const DeclarantPage: React.FC = () => {
               <RiskIndicatorsProfile declaration={declaration} />
               <IncomeTable income={declaration.incomeAgg ?? {}} />
             </Stack>
+
+            <Charts 
+              income={incomeByYear} 
+              assets={incomeByYear}
+            />
             {/* {publicOfficial!.dynamicData && (
-              <Charts data={publicOfficial.dynamicData} />
+              
             )} */}
           </Box>
         </>

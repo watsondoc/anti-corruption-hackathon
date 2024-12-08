@@ -1,7 +1,7 @@
 
-import { Record } from "../../components/table";
+import { Row } from "../../components/table";
 
-export interface Asset extends Record {
+export interface Asset extends Row {
     risk?: number;
     type: string;
     value: string;

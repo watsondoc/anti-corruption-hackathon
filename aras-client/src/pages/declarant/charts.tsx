@@ -3,10 +3,8 @@ import { useMemo } from "react";
 import { AxisOptions, Chart } from "react-charts";
 
 interface ChartsProps {
-  data: {
-    assets: { year: number; value: number }[];
-    income: { year: number; value: number }[];
-  };
+  assets: { year: number; value: number }[];
+  income: { year: number; value: number }[];
 }
 
 interface AssetsChartProps {
@@ -82,10 +80,10 @@ const IncomeChart = ({ income, max }: IncomeChartProps) => {
   );
 };
 
-export const Charts = ({ data }: ChartsProps) => {
+export const Charts = ({ assets, income }: ChartsProps) => {
   const max = Math.max(
-    ...data.assets.map((x) => x.value),
-    ...data.income.map((x) => x.value)
+    ...assets.map((x) => x.value),
+    ...income.map((x) => x.value)
   );
 
   return (
@@ -93,13 +91,13 @@ export const Charts = ({ data }: ChartsProps) => {
       <Card sx={{ height: 250 }}>
         <Typography level="title-md">Assets vs. year</Typography>
         <CardContent>
-          <AssetsChart assets={data.assets} max={max} />
+          <AssetsChart assets={assets} max={max} />
         </CardContent>
       </Card>
       <Card sx={{ height: 250 }}>
         <Typography level="title-md">Income vs. year</Typography>
         <CardContent>
-          <IncomeChart income={data.income} max={max} />
+          <IncomeChart income={income} max={max} />
         </CardContent>
       </Card>
     </Stack>

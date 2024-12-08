@@ -57,6 +57,7 @@ class DeclarationsService {
     async getDeclarationsByDeclarantId(declarantId: number) {
         const declarations = await this.db.collection(this.collectionName)
             .find({ declarantId })
+            .sort('year', 1)
             .toArray();
 
         return declarations;

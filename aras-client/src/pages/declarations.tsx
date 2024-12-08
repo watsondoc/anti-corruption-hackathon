@@ -26,7 +26,7 @@ export interface Declaration extends Row {
   id: string;
   declarantId: number;
 
-  year: string;
+  year: number;
   type: string;
 
   declarantType: string;
