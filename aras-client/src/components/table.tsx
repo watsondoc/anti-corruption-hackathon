@@ -72,6 +72,7 @@ export const Pagination = ({
           size="sm"
           label="Page size"
           options={options}
+          value={pageSize.toString()}
           onChange={(_e, v) => onPageSizeChange((v && parseInt(v)) || 5)}
           disabled={disabled}
         />}

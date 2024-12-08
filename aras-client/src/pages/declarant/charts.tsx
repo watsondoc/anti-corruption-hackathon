@@ -87,17 +87,17 @@ export const Charts = ({ assets, income }: ChartsProps) => {
   );
 
   return (
-    <Stack direction="column" gap={2} flex='1 0'>
-      <Card sx={{ height: 250 }}>
+    <Stack direction="row" gap={2} flex='1 0'>
+      <Card sx={{ height: 250, flex: '1 1 ' }}>
         <Typography level="title-md">Assets vs. year</Typography>
         <CardContent>
-          <AssetsChart assets={assets} max={max} />
+          {assets.length > 0 && <AssetsChart assets={assets} max={max} />}
         </CardContent>
       </Card>
-      <Card sx={{ height: 250 }}>
+      <Card sx={{ height: 250, flex: '1 1' }}>
         <Typography level="title-md">Income vs. year</Typography>
         <CardContent>
-          <IncomeChart income={income} max={max} />
+          {income.length > 0 && <IncomeChart income={income} max={max} />}
         </CardContent>
       </Card>
     </Stack>

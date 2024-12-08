@@ -29,7 +29,7 @@ export const AssetsTable = ({ assets }: AssetsTableProps) => {
     });
   
     return <Card sx={{ p: 0 }}>
-      <Typography pt={2} px={2} level="title-lg">Assets</Typography>
-      <ArasTable table={table} />
+      <Typography pt={2} px={2} level="title-lg" >Assets</Typography>
+      <ArasTable table={table} paginationType="off" />
     </Card>
   };

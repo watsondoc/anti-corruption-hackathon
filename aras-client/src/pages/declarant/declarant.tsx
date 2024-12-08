@@ -10,6 +10,7 @@ import { RiskIndicatorsProfile } from "./risk-indicators-profile";
 import { IncomeTable } from "./income-table";
 import { ArasSelect2 } from "../../components/select2";
 import { Charts } from "./charts";
+import { AssetsTable } from "./assets-table";
 
 export const DeclarantPage: React.FC = () => {
   const declarantId = useParams().id!;
@@ -87,19 +88,17 @@ export const DeclarantPage: React.FC = () => {
             />
           </Box>
           <GeneralInfo declaration={declaration} />
-          <Box display="flex" gap={2} flexWrap="wrap">
-            <Stack direction='column' gap={2}>
-              <RiskIndicatorsProfile declaration={declaration} />
+          <Box display="flex" gap={2} flexWrap="wrap" flexDirection='row'>
+            <RiskIndicatorsProfile declaration={declaration} />
+            <Stack direction='row' gap={2}>
+              <AssetsTable assets={[]} />
               <IncomeTable income={declaration.incomeAgg ?? {}} />
             </Stack>
 
             <Charts 
               income={incomeByYear} 
-              assets={incomeByYear}
+              assets={[]}
             />
-            {/* {publicOfficial!.dynamicData && (
-              
-            )} */}
           </Box>
         </>
       )}

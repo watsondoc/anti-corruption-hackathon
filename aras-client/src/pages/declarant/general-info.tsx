@@ -20,6 +20,7 @@ export const GeneralInfo = ({ declaration }: GeneralInfoProps) => {
           <ListItem>Position: {declaration.position}</ListItem>
           <ListItem>Total Income: {formatCurrency(declaration.income)}</ListItem>
           <ListItem>Total Assets: {formatCurrency(declaration.assets)}</ListItem>
+          
         </List>
       </CardContent>
     </Card>

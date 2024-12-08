@@ -166,7 +166,6 @@ export const Filters = ({ onFiltersChange }: FilterProps) => {
   );
 
   useEffect(() => {
-    console.log('running effect filters');
     handleFiltersChange(query, year, declarationType, declarantType, institutionType);
   }, [query, year, declarationType, declarantType, institutionType, handleFiltersChange]);
 
@@ -175,6 +174,7 @@ export const Filters = ({ onFiltersChange }: FilterProps) => {
       <Stack gap={1} alignItems="end" direction="row">
         <Box flex="1 1">
           <SearchInput
+            value={query}
             onChange={(e) => {
               const q = e.target.value || defaultQuery;
               setQuery(q);
@@ -183,6 +183,7 @@ export const Filters = ({ onFiltersChange }: FilterProps) => {
         </Box>
         <Box flex="0 1 120px">
           <ArasSelect
+            value={year}
             label="Declaration year"
             options={yearOptions}
             onChange={(_e, v) => {
@@ -195,6 +196,7 @@ export const Filters = ({ onFiltersChange }: FilterProps) => {
       <Stack gap={1} alignItems="end" direction="row">
         <Box flex="1 1 200px">
           <ArasSelect
+            value={declarationType}
             label="Declaration Type"
             options={declarationTypeOptions}
             onChange={(_e, v) => {
@@ -205,6 +207,7 @@ export const Filters = ({ onFiltersChange }: FilterProps) => {
         </Box>
         <Box flex="1 1 200px">
           <ArasSelect
+            value={declarantType}
             label="Declarant Type"
             options={declarantTypeOptions}
             onChange={(_e, v) => {
@@ -216,6 +219,7 @@ export const Filters = ({ onFiltersChange }: FilterProps) => {
 
         <Box flex="1 1 200px">
           <ArasSelect
+            value={institutionType  }
             label="Institution Group"
             options={institutionOptions}
             onChange={(_e, v) => {
@@ -229,16 +233,42 @@ export const Filters = ({ onFiltersChange }: FilterProps) => {
   );
 };
 
+const loadFilters = () => {
+  const options = localStorage.getItem("declarations-options");
+  if (!options) {
+    return {
+      query: defaultQuery,
+      year: defaultYear,
+      declarationType: defaultDeclarationType,
+      declarantType: defaultDeclarantType,
+      institution: defaultInstitution,
+    };
+  }
+
+  console.log('options:', JSON.parse(options).filters);
+  return JSON.parse(options).filters;
+}
+
+const loadPageSize = () => {
+  const options = localStorage.getItem("declarations-options");
+  if (!options) {
+    return 10;
+  }
+  return JSON.parse(options).pageSize;
+}
+
+const loadPage = () => {
+  const options = localStorage.getItem("declarations-options");
+  if (!options) {
+    return 1;
+  }
+  return JSON.parse(options).page;
+}
+
 export const DeclarationsPage = () => {
-  const [page, setPage] = useState(1);
-  const [pageSize, setPageSize] = useState(10);
-  const [filters, setFilters] = useState({
-    query: defaultQuery,
-    year: defaultYear,
-    declarationType: defaultDeclarationType,
-    declarantType: defaultDeclarantType,
-    institution: defaultInstitution,
-  });
+  const [page, setPage] = useState(loadPage());
+  const [pageSize, setPageSize] = useState(loadPageSize());
+  const [filters, setFilters] = useState(loadFilters());
 
   const declarations = useQuery({
     queryKey: ["declarations", { filters, pageSize, page }],
@@ -264,6 +294,9 @@ export const DeclarationsPage = () => {
       if (filters.institution !== defaultInstitution) {
         params.append("institution", filters.institution);
       }
+
+      const options = JSON.stringify({ pageSize, page, filters });
+      localStorage.setItem("declarations-options", options);
 
       return fetch(
         `/api/declarations?${params.toString()}`, 
