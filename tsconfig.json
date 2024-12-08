@@ -6,6 +6,7 @@
     "esModuleInterop": true,
     "skipLibCheck": true,
     "moduleResolution": "node",
+    "resolveJsonModule": true,
     "sourceMap": true,
     "outDir": "./dist",
     "baseUrl": "./",

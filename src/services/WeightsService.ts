@@ -1,14 +1,14 @@
 import { Db, ObjectId } from 'mongodb';
-
-const data = require('./weights.json');
 import { client } from '../db/mongoClient';
+import * as weightsData from './weights.json';
 
-type WeightItem = {
+export type WeightItem = {
   id: string;
   title: string;
   weight: number;
   description: string;
 }
+
 class WeightsService {
   private dbName: string;
   private collectionName: string;
@@ -31,6 +31,20 @@ class WeightsService {
     // Perform the update
     const result = await collection.updateOne(filter, update);
 
+    return result;
+  }
+
+  async bulkUpdateWeights(weights: { id: string, weight: number }[]) {
+    const collection = this.db.collection("weights");
+
+    const bulkOps = weights.map(item => ({
+      updateOne: {
+        filter: { id: item.id },
+        update: { $set: { weight: item.weight } }
+      }
+    }));
+
+    const result = await collection.bulkWrite(bulkOps);
     return result;
   }
 
@@ -69,8 +83,8 @@ class WeightsService {
   async generateWeights() {
     const weightsArray: WeightItem[] = [];
     try {
-    const collection = this.db.collection(this.collectionName);
-      const result = await collection.insertMany(data);
+      const collection = this.db.collection(this.collectionName);
+      const result = await collection.insertMany(weightsData);
       console.log(`Inserted ${result.insertedCount} documents into the weight collection`);
     } catch (err) {
       console.error("Failed to insert data", err);

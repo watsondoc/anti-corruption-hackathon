@@ -12,6 +12,10 @@ export const getRiskClass = (risk?: number): string | undefined => {
 };
 
 export const formatCurrency = (value: number | string): string => {
+    if (!value) {
+        value = 0;
+    }
+
     return value.toLocaleString("en-US", {
         style: "currency",
         currency: "USD",

@@ -1,7 +1,7 @@
 import React from "react";
 import { useQuery } from "react-query";
-import { Box, CircularProgress, Stack } from "@mui/joy";
-import { declaration, DECLARATIONS, HOME } from "../../breadcrumbs";
+import { Box, CircularProgress } from "@mui/joy";
+import { declarant, DECLARATIONS, HOME } from "../../breadcrumbs";
 import { Layout } from "../../components/layout";
 import { GeneralInfo } from "./general-info";
 import { AssetsTable } from "./assets-table";
@@ -9,7 +9,7 @@ import { RiskIndicatorsProfile } from "./risk-indicators-profile";
 import { publicOfficial as mockData } from "./mock-data";
 import { Charts } from "./charts";
 
-export const DeclarationPage: React.FC = () => {
+export const DeclarantPage: React.FC = () => {
   const publicOfficialQuery = useQuery({
     queryKey: ["public-official"],
     queryFn: async () => {
@@ -20,7 +20,7 @@ export const DeclarationPage: React.FC = () => {
 
   const publicOfficial = publicOfficialQuery.data;
   return (
-    <Layout title={publicOfficial?.name ?? ''} breadcrumbs={[HOME, DECLARATIONS, declaration('1', publicOfficial?.name ?? '')]}>
+    <Layout title={publicOfficial?.name ?? ''} breadcrumbs={[HOME, DECLARATIONS, declarant('1', publicOfficial?.name ?? '')]}>
       {
         publicOfficialQuery.isLoading && <Box display='flex' justifyContent='center' p={4}>
           <CircularProgress />

@@ -1,7 +1,6 @@
 import fs from 'fs';
 import { client } from '../db/mongoClient';
 import { Declaration } from '../../interfaces/Declaration';
-import * as path from 'path';
 import { parseDetails } from './parseDetails';
 import { chain } from 'stream-chain'
 const { parser } = require('stream-json');
@@ -100,7 +99,8 @@ export class JSONToMongoParser {
 
           // fs.writeFileSync(path.join(__dirname, `${count++}.json`), JSON.stringify(declaration, null, 2));
 
-          if (count > 1000) {
+          count++;
+          if (count > 2000) {
             pipeline.end();
             return;
           }
@@ -109,7 +109,7 @@ export class JSONToMongoParser {
             // Insert the item into MongoDB
             declarations.push(declaration);
             // await collection.insertOne(declaration);
-            console.log(`Inserted item with ID: ${item.id}`);
+            // console.log(`Inserted item with ID: ${item.id}`);
           } catch (err) {
             console.error(`Failed to insert item with ID: ${item.id}`, err);
             reject(err);
@@ -118,7 +118,7 @@ export class JSONToMongoParser {
 
         pipeline.on('end', async () => {
           console.log('Finished processing file');
-          await collection.drop();
+          // await collection.drop();
           await collection.insertMany(declarations);
 
           client.close();
