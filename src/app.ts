@@ -39,7 +39,11 @@ app.use((err: any, req: any, res: any, next: any) => {
 const startServer = async () => {
   await connectToDatabase();
 
-  await riskCalculationService.calculateByYearQPDRI(2024);
+  //await riskCalculationService.calculateByYearQPDRI(2024);
+  //await riskCalculationService.calculateByYearQPDRI(2023);
+  //await riskCalculationService.calculateByYearQPDRI(2022);
+  //await riskCalculationService.calculateByYearQPDRI(2021);
+
   // await weightsService.generateWeights();
 
   /*const parser = new JSONToMongoParser('corruption', 'declarations');

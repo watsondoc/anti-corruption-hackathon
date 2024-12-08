@@ -3,10 +3,7 @@ import dotenv from "dotenv";
 
 dotenv.config();
 
-const uri = process.env.MONGO_URI || "mongodb+srv://qinamrug:newara123@hackathon.smxta.mongodb.net/?retryWrites=true&w=majority&appName=Hackathon";
-
-// mongodb://root:password@localhost:27017/admin
-
+const uri = process.env.MONGO_URI || "mongodb://root:password@localhost:27017/admin";
 const client = new MongoClient(uri);
 
 const connectToDatabase = async () => {
