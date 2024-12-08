@@ -23,12 +23,17 @@ export const toApiModel = ({
     if (risk?.QPDRI?.QPDRI === 1) {
         riskIndicators.push("Quantitative deviation of owned/occupied property from the average");
     }
+    if (risk?.GiftRI?.GiftRI) {
+        riskIndicators.push("Receiving significant gifts");
+    }
 
     let income = 0;
 
     for (const key in incomeAgg) {
         income += incomeAgg[key];
     }
+
+    const riskRating = risk?.QPDRI?.QPDRI ?? 0 + risk?.GiftRI?.GiftRI ?? 0;
 
     return {
         id,
@@ -44,7 +49,7 @@ export const toApiModel = ({
         type,
         risk,
         riskIndicators,
-        riskRating: risk?.QPDRI?.QPDRI ?? 0,
+        riskRating: riskRating,
         income,
         incomeAgg,
     }
