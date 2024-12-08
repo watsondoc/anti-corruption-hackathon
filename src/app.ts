@@ -44,10 +44,15 @@ const startServer = async () => {
   // await riskCalculationService.calculateByYearQPDRI(2022);
   // await riskCalculationService.calculateByYearQPDRI(2021);
 
+  // await riskCalculationService.calculateByYearAbrTRI(2024);
+  // await riskCalculationService.calculateByYearAbrTRI(2023);
+  // await riskCalculationService.calculateByYearAbrTRI(2022);
+  // await riskCalculationService.calculateByYearAbrTRI(2021);
+
+  // await riskCalculationService.calculateByYearTotalIncome(2021);
   // await riskCalculationService.calculateByYearTotalIncome(2022);
   // await riskCalculationService.calculateByYearTotalIncome(2023);
   // await riskCalculationService.calculateByYearTotalIncome(2024);
-  // await weightsService.generateWeights();
 
   /*const parser = new JSONToMongoParser('corruption', 'declarations');
 
