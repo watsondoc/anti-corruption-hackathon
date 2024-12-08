@@ -3,10 +3,11 @@ import { declarationsService } from '../services/DeclarationsService';
 
 const router = express.Router();
 
-const toApiModel = ({
+export const toApiModel = ({
     id,
     name,
     declarant,
+    declarantId,
     declarantType,
     institutionGroup,
     institution,
@@ -14,10 +15,12 @@ const toApiModel = ({
     submissionDate,
     year,
     type,
+    risk,
 }: Record<string, any>) => ({
     id,
     name,
     declarant,
+    declarantId,
     declarantType,
     institutionGroup,
     institution,
@@ -25,6 +28,7 @@ const toApiModel = ({
     submissionDate,
     year,
     type,
+    risk,
 });
 
 const parseQueryOptions = (query: Record<string, any>) => {
@@ -46,15 +50,21 @@ const parseQueryOptions = (query: Record<string, any>) => {
 }
 
 router.get("/", async (req, res) => {
-    const { limit, skip, filters } = parseQueryOptions(req.query);
+    try {
+        console.log('GET /api/declarations');
+        const { limit, skip, filters } = parseQueryOptions(req.query);
 
-    const declarations = await declarationsService.getAllDeclarations({ limit, skip, filters: filters as any });
-    const total = await declarationsService.countDeclarations({ filters: filters as any});
-
-    res.send({
-        data: declarations.map(toApiModel),
-        total,
-    });
+        const declarations = await declarationsService.getAllDeclarations({ limit, skip, filters: filters as any });
+        const total = await declarationsService.countDeclarations({ filters: filters as any});
+    
+        res.send({
+            data: declarations.map(toApiModel),
+            total,
+        });
+    } catch (error) {
+        console.error(error);
+        res.status(500).send({ message: "Internal server error", error });
+    }
 });
 
 export default router;

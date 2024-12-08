@@ -40,6 +40,7 @@ class DeclarationsService {
     async getAllDeclarations(options: Options) {
         const declarations = await this.db.collection(this.collectionName)
             .find(this.mapFilters(options.filters))
+            .sort('risk.QPDRI.QPDRI', -1)
             .skip(options.skip)
             .limit(options.limit)
             .toArray();
@@ -53,8 +54,18 @@ class DeclarationsService {
         return count;
     }
 
+    async getDeclarationsByDeclarantId(declarantId: number) {
+        const declarations = await this.db.collection(this.collectionName)
+            .find({ declarantId })
+            .toArray();
+
+        return declarations;
+    }
+
     mapFilters(filters: Options['filters']): Filter<any> {
-        const mongoFilters: Record<string, any> = {};
+        const mongoFilters: Record<string, any> = {
+            declarantId: { $exists: true },
+        };
 
         if (filters.query) {
             mongoFilters.$text = { $search: filters.query };
