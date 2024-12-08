@@ -4,6 +4,7 @@
   "description": "Data Against Corruption Hackathon",
   "main": "index.js",
   "scripts": {
+    "start-debug": "tsc && node dist/src/app.js",
     "start-ts": "ts-node src/app.ts",
     "dev": "nodemon --watch \"src/**\" --ext \"ts,json\" --exec \"ts-node src/app.ts\"",
     "start": "node dist/src/app.js",
