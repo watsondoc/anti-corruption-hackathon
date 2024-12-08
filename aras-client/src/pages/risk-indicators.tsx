@@ -1,6 +1,5 @@
 import { useEffect, useMemo, useState } from "react";
-import { Alert, Button, Card, Input, Snackbar, Stack } from "@mui/joy";
-
+import { Button, Card, Input, Snackbar, Stack } from "@mui/joy";
 import {
   createColumnHelper,
   getCoreRowModel,
@@ -8,10 +7,10 @@ import {
 } from "@tanstack/react-table";
 import { HOME, RISK_INDICATORS } from "../breadcrumbs";
 import { Layout } from "../components/layout";
-import { ArasTable, Record } from "../components/table";
+import { ArasTable, Row } from "../components/table";
 import { useMutation, useQuery } from "react-query";
 
-interface RiskIndicator extends Record {
+interface RiskIndicator extends Row {
   title: string;
   prevWeight: number;
   weight: number;

@@ -16,20 +16,39 @@ export const toApiModel = ({
     year,
     type,
     risk,
-}: Record<string, any>) => ({
-    id,
-    name,
-    declarant,
-    declarantId,
-    declarantType,
-    institutionGroup,
-    institution,
-    position,
-    submissionDate,
-    year,
-    type,
-    risk,
-});
+    incomeAgg,
+}: Record<string, any>) => {
+    const riskIndicators = [];
+
+    if (risk?.QPDRI?.QPDRI === 1) {
+        riskIndicators.push("Quantitative deviation of owned/occupied property from the average");
+    }
+
+    let income = 0;
+
+    for (const key in incomeAgg) {
+        income += incomeAgg[key];
+    }
+
+    return {
+        id,
+        name,
+        declarant,
+        declarantId,
+        declarantType,
+        institutionGroup,
+        institution,
+        position,
+        submissionDate,
+        year,
+        type,
+        risk,
+        riskIndicators,
+        riskRating: risk?.QPDRI?.QPDRI ?? 0,
+        income,
+        incomeAgg,
+    }
+}
 
 const parseQueryOptions = (query: Record<string, any>) => {
     const { limit: queryLimit, skip: querySkip, ...filters } = query;
