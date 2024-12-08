@@ -168,6 +168,7 @@ export const ArasTable = <T extends Row>({
           <Pagination
             pageOptions={PAGE_SIZES}
             onPageSizeChange={(pageSize: number) => {
+              table.setPageSize(pageSize);
               props.onPageSizeChange?.(pageSize);
             }}
             hasNext={props.hasNext || false}
