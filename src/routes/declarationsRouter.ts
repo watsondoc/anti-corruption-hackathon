@@ -26,6 +26,12 @@ export const toApiModel = ({
     if (risk?.GiftRI?.GiftRI) {
         riskIndicators.push("Receiving significant gifts");
     }
+    if (risk?.HLWRI?.HLWRI) {
+        riskIndicators.push("Significant gains");
+    }
+    if (risk?.AbrTRI?.AbrTRI) {
+        riskIndicators.push("Signing transactions of alienation of individuals/registered organizations residing abroad");
+    }
 
     let income = 0;
 
@@ -33,7 +39,7 @@ export const toApiModel = ({
         income += incomeAgg[key];
     }
 
-    const riskRating = risk?.QPDRI?.QPDRI ?? 0 + risk?.GiftRI?.GiftRI ?? 0;
+    const riskRating = risk?.QPDRI?.QPDRI ?? 0 + risk?.GiftRI?.GiftRI ?? 0 + risk?.HLWRI?.HLWRI ?? 0 + risk?.AbrTRI?.AbrTRI ?? 0;
 
     return {
         id,
