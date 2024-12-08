@@ -1,3 +1,6 @@
+import { fillRows, FillRowsResult } from "../../../../seedData/sections/tools/RowsSearcher";
+import { ValueClass } from "../../../../src/parser/originalInterfaces";
+
 export interface b_4_1_DeclarantLoan {
     numbering: number | null; // "NN ը/կ"
     declarantLenderName: string; // "Հայտարարատու պարտատիրոջ անունը, ազգանունը, հայրանունը"
@@ -9,15 +12,17 @@ export interface b_4_1_DeclarantLoan {
 }
 
 export const parseDeclarantLoan = (
-    rows: any[]
-): b_4_1_DeclarantLoan[] => {
-    return rows.map((row) => ({
-        numbering: parseInt(row[0], 10) || null,
-        declarantLenderName: row[1] || "",
-        borrowerName: row[2] || "",
-        borrowerAddress: row[3] || "",
-        relationshipNature: row[4] || "",
-        loanInterestRate: row[5] || "",
-        loanAmountAndCurrency: row[6] || "",
-    }));
+    vc: ValueClass
+): FillRowsResult<b_4_1_DeclarantLoan> => {
+    const names = {
+        numbering: ["NN ը/կ"],
+        declarantLenderName: ["Հայտարարատու պարտատիրոջ անունը, ազգանունը, հայրանունը"],
+        borrowerName: ["Պարտապանի անվանումը կամ անունը, ազգանունը, հայրանունը"],
+        borrowerAddress: ["Պարտապանի հասցեն"],
+        relationshipNature: ["Կողմերի միջև առկա կապի բնույթը"],
+        loanInterestRate: ["Փոխառության տոկոսադրույքը"],
+        loanAmountAndCurrency: ["Պաշտոնի ստանձնման կամ դադարեցման օրվա դրությամբ առկա փոխառության գումարը և արժույթը"],
+    }
+
+    return fillRows(names, vc);
 };

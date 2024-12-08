@@ -1,3 +1,6 @@
+import { fillRows, FillRowsResult } from "../../../../seedData/sections/tools/RowsSearcher";
+import { ValueClass } from "../../../../src/parser/originalInterfaces";
+
 export interface b_6_4_ThirdPartyElectronicAccountCrypto {
     numbering: number | null; // "NN ը/կ"
     declarantName: string; // "Հայտարարատուի անունը, ազգանունը, հայրանունը"
@@ -9,15 +12,17 @@ export interface b_6_4_ThirdPartyElectronicAccountCrypto {
 }
 
 export const parseThirdPartyElectronicAccountsAndCrypto = (
-    rows: string[][]
-): b_6_4_ThirdPartyElectronicAccountCrypto[] => {
-    return rows.map((row) => ({
-        numbering: parseInt(row[0], 10) || null, // "NN ը/կ"
-        declarantName: row[1] || "", // "Հայտարարատուի անունը, ազգանունը, հայրանունը"
-        accountOrCryptoType: row[2] || "", // "Պաշտոնի ստանձնման կամ դադարեցման օրվա դրությամբ առկա էլեկտրոնային հաշվի կամ կրիպտոարժույթի տեսակը"
-        balanceAndCurrency: row[3] || "", // "Պաշտոնի ստանձնման կամ դադարեցման օրվա դրությամբ առկա էլեկտրոնային հաշվի կամ կրիպտոարժույթի գումարը և արժույթը"
-        sourceOfFunds: row[4] || "", // "Պաշտոնի ստանձնման կամ դադարեցման օրվա դրությամբ առկա էլեկտրոնային հաշվի կամ կրիպտոարժույթի ծագման աղբյուրը"
-        ownerName: row[5] || "", // "Էլեկտրոնային հաշիվների և կրիպտոարժույթի սեփականատիրոջ անվանումը կամ անունը, ազգանունը, հայրանունը"
-        relationshipNature: row[6] || "", // "Հայտարարատուի և երրորդ անձի միջև առկա կապի բնույթը"
-    }));
+    vc: ValueClass
+): FillRowsResult<b_6_4_ThirdPartyElectronicAccountCrypto> => {
+    const names = {
+        numbering: ["NN ը/կ"],
+        declarantName: ["Հայտարարատուի անունը, ազգանունը, հայրանունը"],
+        accountOrCryptoType: ["Պաշտոնի ստանձնման կամ դադարեցման օրվա դրությամբ առկա էլեկտրոնային հաշվի կամ կրիպտոարժույթի տեսակը"],
+        balanceAndCurrency: ["Պաշտոնի ստանձնման կամ դադարեցման օրվա դրությամբ առկա էլեկտրոնային հաշվի կամ կրիպտոարժույթի գումարը և արժույթը"],
+        sourceOfFunds: ["Պաշտոնի ստանձնման կամ դադարեցման օրվա դրությամբ առկա էլեկտրոնային հաշվի կամ կրիպտոարժույթի ծագման աղբյուրը"],
+        ownerName: ["Էլեկտրոնային հաշիվնե��ի և կրիպտոարժույթի սեփականատիրոջ անվանումը կամ անունը, ազգանունը, հայրանունը"],
+        relationshipNature: ["Հայտարարատուի և երրորդ անձի միջև առկա կապի բնույթը"],
+    };
+
+    return fillRows(names, vc);
 };

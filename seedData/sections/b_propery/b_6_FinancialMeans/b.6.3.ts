@@ -1,3 +1,7 @@
+import { fillRows, FillRowsResult } from "../../../../seedData/sections/tools/RowsSearcher";
+import { ValueClass } from "../../../../src/parser/originalInterfaces";
+
+
 export interface b_6_3_ElectronicAccountCrypto {
     numbering: number | null; // "NN ը/կ"
     ownerName: string; // "Սեփականատիրոջ անունը, ազգանունը, հայրանունը"
@@ -7,13 +11,16 @@ export interface b_6_3_ElectronicAccountCrypto {
 }
 
 export const parseElectronicAccountsAndCrypto = (
-    rows: string[][]
-): b_6_3_ElectronicAccountCrypto[] => {
-    return rows.map((row) => ({
-        numbering: parseInt(row[0], 10) || null, // "NN ը/կ"
-        ownerName: row[1] || "", // "Սեփականատիրոջ անունը, ազգանունը, հայրանունը"
-        accountOrCryptoType: row[2] || "", // "Պաշտոնի ստանձնման կամ դադարեցման օրվա դրությամբ առկա էլեկտրոնային հաշվի կամ կրիպտոարժույթի տեսակը"
-        balanceAndCurrency: row[3] || "", // "Պաշտոնի ստանձնման կամ դադարեցման օրվա դրությամբ առկա էլեկտրոնային հաշվի կամ կրիպտոարժույթի գումարը և արժույթը"
-        sourceOfFunds: row[4] || "", // "Պաշտոնի ստանձնման կամ դադարեցման օրվա դրությամբ առկա էլեկտրոնային հաշվի կամ կրիպտոարժույթի ծագման աղբյուրը"
-    }));
+    vc: ValueClass
+): FillRowsResult<b_6_3_ElectronicAccountCrypto> => {
+    const names = {
+        numbering: ["NN ը/կ"],
+        ownerName: ["Սեփականատիրոջ անունը, ազգանունը, հայրանունը"],
+        bankName: ["Բանկի անվանումը (ՀՀ տարածքից դուրս գտնվող բանկի դեպքում)"],
+        bankLocation: ["Բանկի գտնվելու վայրը (ՀՀ տարածքից դուրս գտնվող բանկի դեպքում)"],
+        balanceAndCurrency: ["Պաշտոնի ստանձնման կամ դադարեցման օրվա դրությամբ առկա դրամական միջոցի գումարը և ա],րժույթը"],
+        sourceOfFunds: ["Պաշտոնի ստանձնման կամ դադարեցման օրվա դրությամբ առկա դրամական միջոցի ծագման աղբյուրը"],
+    }
+
+    return fillRows(names, vc);
 };

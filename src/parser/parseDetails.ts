@@ -91,86 +91,134 @@ function parseProperty(property: Content, logMessage: logFunc): B_PropertySectio
 
     // b_2_2
     const declarantVehicleTable = vehicleGrid?.rows[1]?.cells[0]?.value as ValueClass;
-    const b_2_2_declarantVehicles: b_2_2_DeclarantVehicle[] = declarantVehicleTable?.rows ? parseDeclarantVehicles(declarantVehicleTable.rows) : [];
+    const [b_2_2_declarantVehicles, b_2_2_declarantVehicles_parsingIssues] = parseDeclarantVehicles(declarantVehicleTable);
+    if (b_2_2_declarantVehicles_parsingIssues.remainingHeaders.length > 0) {
+        logMessage("b_2_2_declarantVehicles_parsingIssues ", b_2_2_declarantVehicles_parsingIssues);
+    }
 
     // b_3
     const securitiesAndInvestmentsGrid = grids.find(grid => grid.category === DeclarationCategory.b_3_SecurityAndInvestment);
 
     // b_3_1
     const equitySecuritiesAndInvestmentsTable = securitiesAndInvestmentsGrid?.rows[0]?.cells[0]?.value as ValueClass;
-    const b_3_1_equitySecuritiesAndInvestments: b_3_1_EquitySecuritiesAndInvestmentsRow[] = equitySecuritiesAndInvestmentsTable?.rows ? parseEquitySecuritiesAndInvestmentsRows(equitySecuritiesAndInvestmentsTable.rows) : [];
+    const [b_3_1_equitySecuritiesAndInvestments, b_3_1_parsingIssues] = parseEquitySecuritiesAndInvestmentsRows(equitySecuritiesAndInvestmentsTable);
+    if (b_3_1_parsingIssues.remainingHeaders.length > 0) {
+        logMessage("b_3_1_parsingIssues ", b_3_1_parsingIssues);
+    }
 
     // b_3_2
     const declarantThirdPartyInvestmentsTable = securitiesAndInvestmentsGrid?.rows[1]?.cells[0]?.value as ValueClass;
-    const b_3_2_declarantThirdPartyInvestments: b_3_2_DeclarantThirdPartyInvestments[] = declarantThirdPartyInvestmentsTable?.rows ? parseDeclarantThirdPartyInvestments(declarantThirdPartyInvestmentsTable?.rows) : [];
+    const [b_3_2_declarantThirdPartyInvestments, b_3_2_parsingIssues] = parseDeclarantThirdPartyInvestments(declarantThirdPartyInvestmentsTable);
+    if (b_3_2_parsingIssues.remainingHeaders.length > 0) {
+        logMessage("b_3_2_parsingIssues ", b_3_2_parsingIssues);
+    }
 
     // b_3_3
     const declarantDebtSecuritiesTable = securitiesAndInvestmentsGrid?.rows[2]?.cells[0]?.value as ValueClass;
-    const b_3_3_declarantDebtSecurities: b_3_3_DeclarantDebtSecurities[] = declarantDebtSecuritiesTable?.rows ? parseDeclarantDebtSecurities(declarantDebtSecuritiesTable.rows) : [];
+    const [b_3_3_declarantDebtSecurities, b_3_3_parsingIssues] = parseDeclarantDebtSecurities(declarantDebtSecuritiesTable);
+    if (b_3_3_parsingIssues.remainingHeaders.length > 0) {
+        logMessage("b_3_3_parsingIssues ", b_3_3_parsingIssues);
+    }
 
     // b_3_4
     const declarantDebtSecuritiesThirdPartyTable = securitiesAndInvestmentsGrid?.rows[3]?.cells[0]?.value as ValueClass;
-    const b_3_4_declarantDebtSecuritiesThirdParty: b_3_4_DeclarantDebtSecuritiesThirdParty[] = declarantDebtSecuritiesThirdPartyTable?.rows ? parseDeclarantDebtSecuritiesThirdParty(declarantDebtSecuritiesThirdPartyTable.rows) : [];
+    const [b_3_4_declarantDebtSecuritiesThirdParty, b_3_4_parsingIssues] = parseDeclarantDebtSecuritiesThirdParty(declarantDebtSecuritiesThirdPartyTable);
+    if (b_3_4_parsingIssues.remainingHeaders.length > 0) {
+        logMessage("b_3_4_parsingIssues ", b_3_4_parsingIssues);
+    }
 
     // b_4
     const loansAndDepositsGrid = grids.find(grid => grid.category === DeclarationCategory.b_4_LoansAndDeposits);
 
     // b_4_1
     const declarantLoanTable = loansAndDepositsGrid?.rows[0]?.cells[0]?.value as ValueClass;
-    const b_4_1_loans: b_4_1_DeclarantLoan[] = declarantLoanTable?.rows ? parseDeclarantLoan(declarantLoanTable.rows) : [];
+    const [b_4_1_loans, b_4_1_parsingIssues] = parseDeclarantLoan(declarantLoanTable);
+    if (b_4_1_parsingIssues.remainingHeaders.length > 0) {
+        logMessage("b_4_1_parsingIssues ", b_4_1_parsingIssues);
+    }
 
     // b_4_2
     const declarantThirdPartyLoanTable = loansAndDepositsGrid?.rows[1]?.cells[0]?.value as ValueClass;
-    const b_4_2_declarantThirdPartyLoans: b_4_2_DeclarantThirdPartyLoan[] = declarantThirdPartyLoanTable?.rows ? parseDeclarantThirdPartyLoan(declarantThirdPartyLoanTable.rows) : [];
+    const [b_4_2_declarantThirdPartyLoans, b_4_2_parsingIssues] = parseDeclarantThirdPartyLoan(declarantThirdPartyLoanTable);
+    if (b_4_2_parsingIssues.remainingHeaders.length > 0) {
+        logMessage("b_4_2_parsingIssues ", b_4_2_parsingIssues);
+    }
 
     // b_4_3
     const bankDepositTable = loansAndDepositsGrid?.rows[2]?.cells[0]?.value as ValueClass;
-    const b_4_3_bankDeposits: b_4_3_BankDeposit[] = bankDepositTable?.rows ? parseBankDeposits(bankDepositTable.rows) : [];
+    const [b_4_3_bankDeposits, b_4_3_parsingIssues] = parseBankDeposits(bankDepositTable);
+    if (b_4_3_parsingIssues.remainingHeaders.length > 0) {
+        logMessage("b_4_3_parsingIssues ", b_4_3_parsingIssues);
+    }
 
     // b_4_4
     const declarantThirdPartyDepositTable = loansAndDepositsGrid?.rows[3]?.cells[0]?.value as ValueClass;
-    const b_4_4_declarantThirdPartyDeposits: b_4_4_ThirdPartyBankDeposit[] = declarantThirdPartyDepositTable?.rows ? parseThirdPartyBankDeposits(declarantThirdPartyDepositTable.rows) : [];
+    const [b_4_4_declarantThirdPartyDeposits, b_4_4_parsingIssues] = parseThirdPartyBankDeposits(declarantThirdPartyDepositTable);
+    if (b_4_4_parsingIssues.remainingHeaders.length > 0) {
+        logMessage("b_4_4_parsingIssues ", b_4_4_parsingIssues);
+    }
 
     // b_5
     const expensivePropGrid = grids.find(grid => grid.category === DeclarationCategory.b_5_ExpensiveProperty);
 
     // b_5_1
     const valuablePropertyTable = expensivePropGrid?.rows[0]?.cells[0]?.value as ValueClass;
-    const b_5_1_valuableProperties: b_5_1_ValuableProperty[] = valuablePropertyTable?.rows ? parseValuableProperties(valuablePropertyTable.rows) : [];
+    const [b_5_1_valuableProperties, b_5_1_parsingIssues] = parseValuableProperties(valuablePropertyTable);
+    if (b_5_1_parsingIssues.remainingHeaders.length > 0) {
+        logMessage("b_5_1_parsingIssues ", b_5_1_parsingIssues);
+    }
 
     // b_5_2
     const declarantValuablePropertyTable = expensivePropGrid?.rows[1]?.cells[0]?.value as ValueClass;
-    const b_5_2_declarantValuableProperties: b_5_2_DeclarantValuableProperty[] = declarantValuablePropertyTable?.rows ? parseDeclarantValuableProperties(declarantValuablePropertyTable.rows) : [];
+    const [b_5_2_declarantValuableProperties, b_5_2_parsingIssues] = parseDeclarantValuableProperties(declarantValuablePropertyTable);
+    if (b_5_2_parsingIssues.remainingHeaders.length > 0) {
+        logMessage("b_5_2_parsingIssues ", b_5_2_parsingIssues);
+    }
 
     // b_6
     const financialMeansGrid = grids.find(grid => grid.category === DeclarationCategory.b_6_FinancialMeans);
 
     // b_6_1
     const bankAccountBalancesTable = financialMeansGrid?.rows[0]?.cells[0]?.value as ValueClass;
-    const b_6_1_bankAccountBalances: b_6_1_BankAccountBalance[] = bankAccountBalancesTable?.rows ? parseBankAccountBalances(bankAccountBalancesTable.rows) : [];
+    const [b_6_1_bankAccountBalances, b_6_1_parsingIssues] = parseBankAccountBalances(bankAccountBalancesTable);
+    if (b_6_1_parsingIssues.remainingHeaders.length > 0) {
+        logMessage("b_6_1_parsingIssues ", b_6_1_parsingIssues);
+    }
 
     // b_6_2
     const thirdPartyBankAccountBalancesTable = financialMeansGrid?.rows[1]?.cells[0]?.value as ValueClass;
-    const b_6_2_thirdPartyBankAccountBalances: b_6_2_ThirdPartyBankAccountBalance[] = thirdPartyBankAccountBalancesTable?.rows ? parseThirdPartyBankAccountBalances(thirdPartyBankAccountBalancesTable.rows) : [];
+    const [b_6_2_thirdPartyBankAccountBalances, b_6_2_parsingIssues] = parseThirdPartyBankAccountBalances(thirdPartyBankAccountBalancesTable);
+    if (b_6_2_parsingIssues.remainingHeaders.length > 0) {
+        logMessage("b_6_2_parsingIssues ", b_6_2_parsingIssues);
+    }
 
     // b_6_3
     const electronicAccountCryptoTable = financialMeansGrid?.rows[2]?.cells[0]?.value as ValueClass;
-    const b_6_3_electronicAccountCrypto: b_6_3_ElectronicAccountCrypto[] = electronicAccountCryptoTable?.rows ? parseElectronicAccountsAndCrypto(electronicAccountCryptoTable.rows) : [];
+    const [b_6_3_electronicAccountCrypto, b_6_3_parsingIssues] = parseElectronicAccountsAndCrypto(electronicAccountCryptoTable);
+    if (b_6_3_parsingIssues.remainingHeaders.length > 0) {
+        logMessage("b_6_3_parsingIssues ", b_6_3_parsingIssues);
+    }
 
     // b_6_4
     const thirdPartyElectronicAccountCryptoTable = financialMeansGrid?.rows[3]?.cells[0]?.value as ValueClass;
-    const b_6_4_thirdPartyElectronicAccountCrypto: b_6_4_ThirdPartyElectronicAccountCrypto[] = thirdPartyElectronicAccountCryptoTable?.rows ? parseThirdPartyElectronicAccountsAndCrypto(thirdPartyElectronicAccountCryptoTable.rows) : [];
+    const [b_6_4_thirdPartyElectronicAccountCrypto, b_6_4_parsingIssues] = parseThirdPartyElectronicAccountsAndCrypto(thirdPartyElectronicAccountCryptoTable);
+    if (b_6_4_parsingIssues.remainingHeaders.length > 0) {
+        logMessage("b_6_4_parsingIssues ", b_6_4_parsingIssues);
+    }
 
     // b_6_5
     const cashHoldingsTable = financialMeansGrid?.rows[4]?.cells[0]?.value as ValueClass;
-    const b_6_5_cashHoldings: b_6_5_CashHoldings[] = cashHoldingsTable?.rows ? parseCashHoldings(cashHoldingsTable.rows) : [];
+    const [b_6_5_cashHoldings, b_6_5_parsingIssues] = parseCashHoldings(cashHoldingsTable);
+    if (b_6_5_parsingIssues.remainingHeaders.length > 0) {
+        logMessage("b_6_5_parsingIssues ", b_6_5_parsingIssues);
+    }
 
     // b_6_6
     const cashHoldingsThirdPartyTable = financialMeansGrid?.rows[5]?.cells[0]?.value as ValueClass;
-    const b_6_6_cashHoldingsThirdParty: b_6_6_CashHoldingsThirdParty[] = cashHoldingsThirdPartyTable?.rows ? parseCashHoldingsThirdParty(cashHoldingsThirdPartyTable.rows) : [];
-
-    // // b_7
-    // const propertyAdditionalInformationGrid = grids.find(grid => grid.category === DeclarationCategory.b_7_PropertyAdditionalInformation);
+    const [b_6_6_cashHoldingsThirdParty, b_6_6_parsingIssues] = parseCashHoldingsThirdParty(cashHoldingsThirdPartyTable);
+    if (b_6_6_parsingIssues.remainingHeaders.length > 0) {
+        logMessage("b_6_6_parsingIssues ", b_6_6_parsingIssues);
+    }
 
     return {
         b_1_realEstate: {
@@ -216,12 +264,17 @@ function parseIncome(income: Content, logMessage: logFunc): C_IncomeSection {
 
     // c_1_1
     const reportingPeriodIncomeTable = revenuesGrid?.rows[0]?.cells[0]?.value as ValueClass;
-    const c_1_1_reportingPeriodIncomes = reportingPeriodIncomeTable?.rows ? parseReportingPeriodIncome(reportingPeriodIncomeTable.rows) : [];
+    const [c_1_1_reportingPeriodIncomes, c_1_1_reportingPeriodIncomesIssues] = parseReportingPeriodIncome(reportingPeriodIncomeTable);
+    if (c_1_1_reportingPeriodIncomesIssues.remainingHeaders.length > 0) {
+        logMessage("b_6_5_parsingIssues ", c_1_1_reportingPeriodIncomesIssues);
+    }
 
     // c_1_2
     const loanAndCreditBalanceTable = revenuesGrid?.rows[1]?.cells[0]?.value as ValueClass;
-    const c_1_2_loanAndCreditBalances = loanAndCreditBalanceTable?.rows ? parseLoanAndCreditBalance(loanAndCreditBalanceTable.rows) : [];
-
+    const [c_1_2_loanAndCreditBalances, c_1_2_loanAndCreditBalancesIssues] = parseLoanAndCreditBalance(loanAndCreditBalanceTable);
+    if (c_1_2_loanAndCreditBalancesIssues.remainingHeaders.length > 0) {
+        logMessage("c_1_2_loanAndCreditBalancesIssues ", c_1_2_loanAndCreditBalancesIssues);
+    }
     // c_2
     const incomeAdditionalInformationGrid = grids.find(grid => grid.category === DeclarationCategory.c_2_IncomeAdditionalInformation);
     const c_2_incomeAdditionalInformationJson = JSON.stringify(incomeAdditionalInformationGrid?.rows);

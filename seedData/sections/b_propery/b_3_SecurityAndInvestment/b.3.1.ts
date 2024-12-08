@@ -1,3 +1,6 @@
+import { fillRows, FillRowsResult } from "../../../../seedData/sections/tools/RowsSearcher";
+import { ValueClass } from "../../../../src/parser/originalInterfaces";
+
 export interface b_3_1_EquitySecuritiesAndInvestmentsRow {
   numbering: number | null; // "NN ը/կ"
   ownerName: string; // "Հայտարարատու սեփականատիրոջ անունը, ազգանունը, հայրանունը"
@@ -12,18 +15,21 @@ export interface b_3_1_EquitySecuritiesAndInvestmentsRow {
 }
 
 export const parseEquitySecuritiesAndInvestmentsRows = (
-  rows: string[][]
-): b_3_1_EquitySecuritiesAndInvestmentsRow[] => {
-  return rows.map((row) => ({
-    numbering: parseInt(row[0], 10) || null,
-    ownerName: row[1] || "",
-    companyName: row[2] || "",
-    investmentType: row[3] || "",
-    acquisitionDate: row[4] || "",
-    acquisitionMethod: row[5] || "",
-    counterpartyInfo: row[6] || "",
-    relationshipNature: row[7] || "",
-    currentValue: row[8] || "",
-    ownershipPercentage: row[9] || "",
-  }));
+  vc: ValueClass
+): FillRowsResult<b_3_1_EquitySecuritiesAndInvestmentsRow> => {
+
+  const names = {
+    numbering: ["NN ը/կ"],
+    ownerName: ["Հայտարարատու սեփականատիրոջ անունը, ազգանունը, հայրանունը"],
+    companyName: ["Ընկերության լրիվ անվանումը"],
+    investmentType: ["Արժեթղթի կամ այլ ներդրման տեսակը"],
+    acquisitionDate: ["Ձեռք բերելու ամսաթիվը"],
+    acquisitionMethod: ["Ձեռք բերելու եղանակը"],
+    counterpartyInfo: ["Գործարքի մյուս կողմի անվանումը կամ անունը, ազգանունը, հայրանունը, հասցեն"],
+    relationshipNature: ["Կողմերի միջև առկա կապի բնույթը"],
+    currentValue: ["Պաշտոնի ստանձնման կամ դադարեցման օրվա դրությամբ առկա բաժնային արժեթղթի կամ այլ ներդրման արժեքը(գինը) և արժույթը"],
+    ownershipPercentage: ["Պաշտոնի ստանձնման կամ դադարեցման օրվա դրությամբ առկա բաժնային արժեթղթի կամ այլ ներդրման բաժնեմասնակցության %"]
+  }
+
+  return fillRows(names, vc);
 };

@@ -1,3 +1,6 @@
+import { fillRows, FillRowsResult } from "../../../../seedData/sections/tools/RowsSearcher";
+import { ValueClass } from "../../../../src/parser/originalInterfaces";
+
 // Имущество (драгоценное имущество)стоимостью более четырех миллионов драмов или эквивалента в иностранной валюте, имеющееся на день вступления в должность или прекращения ее действия.
 export interface b_5_1_ValuableProperty {
     numbering: number | null; // "NN ը/կ"
@@ -10,15 +13,17 @@ export interface b_5_1_ValuableProperty {
 }
 
 export const parseValuableProperties = (
-    rows: string[][]
-): b_5_1_ValuableProperty[] => {
-    return rows.map((row) => ({
-        numbering: parseInt(row[0], 10) || null,
-        ownerName: row[1] || "",
-        propertyType: row[2] || "",
-        description: row[3] || "",
-        acquisitionYear: row[4] || "",
-        acquisitionMethod: row[5] || "",
-        valueAndCurrency: row[6] || "",
-    }));
+    vc: ValueClass
+): FillRowsResult<b_5_1_ValuableProperty> => {
+    const names = {
+        numbering: ["NN ը/կ"],
+        ownerName: ["Declarant owner's name (e.g., \"Հայտարարատու սեփականատիրոջ անունը, ազգանունը, հայրանունը\")"],
+        propertyType: ["Type of valuable property"],
+        description: ["Description of the property"],
+        acquisitionYear: ["Year of acquisition"],
+        acquisitionMethod: ["Method of acquisition"],
+        valueAndCurrency: ['Value and currency (e.g., "4,000,000 AMD")'],
+    }
+
+    return fillRows(names, vc);
 };
