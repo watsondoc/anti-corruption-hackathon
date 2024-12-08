@@ -20,7 +20,7 @@ class RiskCalculationService {
 
     const filter = { year: year };
 
-    const items: Declaration[] = await collection.find<Declaration>(filter).limit(1000).toArray();
+    const items: Declaration[] = await collection.find<Declaration>(filter).toArray();
 
     let VEall = 0;
 
@@ -82,6 +82,8 @@ class RiskCalculationService {
         { id: item.id }, // Filter by _id
         { $set: item } // Update the document
       );
+
+      console.log('updated' + item.id + ' with risks:' + JSON.stringify(item.risk));
     }
 
     return q;
