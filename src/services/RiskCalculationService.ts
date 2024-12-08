@@ -1,6 +1,7 @@
 import { client } from '../db/mongoClient';
 import { Db, ObjectId } from 'mongodb';
 import { Declaration } from '../../interfaces/Declaration';
+import { Declarant } from '../../interfaces/Declarant';
 
 const currencyExchange: any = {
   '$': 400,
@@ -159,7 +160,7 @@ class RiskCalculationService {
       const incomeArray = item.c_incomes.c_1_revenues.c_1_1_reportingPeriodIncomes;
 
       for (const income of incomeArray) {
-        const money = income.relationshipNature;
+        const money = income.monetaryIncomeAmountAndCurrency;
         const type = income.incomeType;
 
         if (money === '' || type === '') {
@@ -180,7 +181,7 @@ class RiskCalculationService {
         }
         incomeAgg[type] = (incomeAgg[type] || 0) + amountMoney;
 
-        console.log(incomeAgg);
+        // console.log(incomeAgg);
       }
 
       item.incomeAgg = {
@@ -199,6 +200,61 @@ class RiskCalculationService {
     const parsedNumber = parseInt(moneyArr[1].replace(/,/g, ""), 10)
     return [moneyArr[0], parsedNumber];
   }
+
+  public async calculateByYearGiftRI(year: number) {
+    const collection = this.db.collection(this.collectionName);
+
+    const filter = { year: year };
+
+    const items: Declaration[] = await collection.find<Declaration>(filter).toArray();
+
+    let GiftRI = 0;
+    for (const item of items) {
+      const incomeAgg = item.incomeAgg;
+
+      if (incomeAgg) {
+        // A gift.
+        const gifts = incomeAgg['Նվիրատվության կամ օգնության կարգով ստացված գույքը, դրամական միջոցները (բացառությամբ աշխատանքի, ծառայության տեսքով ստացած)'];
+        const incomes: number[] = Object.values(incomeAgg);
+        const total = incomes.reduce((a: number, b: number) => a + b, 0)
+        if (gifts >= total * 0.3) {
+          GiftRI = 2;
+        }
+      }
+
+      if (item.risk) {
+        item.risk = {
+          ...item.risk,
+          GiftRI: {
+            GiftRI: GiftRI
+          }
+        }
+      } else {
+        item.risk = {
+          GiftRI: {
+            GiftRI: GiftRI,
+          }
+        }
+      }
+
+      await collection.updateOne(
+        { id: item.id },
+        { $set: item }
+      );
+    }
+  }
+
+  // public async calculateLuckyRI() {
+  //   const collection = this.db.collection("declarants");
+  
+  //   const persons: Declarant[] = await collection.find<Declarant>({}).toArray();
+  
+  //   Look to the MongoDB lookup syntax to join collections.
+  //   let LuckyRI = 0;
+  //   for (const person of persons) {
+  //     person.
+  //   }
+  // }
 }
 
 export const riskCalculationService = new RiskCalculationService();

@@ -40,6 +40,11 @@ app.use('/', (err: any, req: any, res: any, next: any) => {
 // Start the server and connect to MongoDB
 const startServer = async () => {
   await connectToDatabase();
+  
+  console.time('executionTime');
+
+  // await riskCalculationService.calculateByYearGiftRI(2024);
+  // await riskCalculationService.calculateByYearTotalIncome(2024);
 
   // await riskCalculationService.calculateByYearQPDRI(2024);
   // await riskCalculationService.calculateByYearQPDRI(2023);
@@ -55,6 +60,8 @@ const startServer = async () => {
   // await riskCalculationService.calculateByYearTotalIncome(2022);
   // await riskCalculationService.calculateByYearTotalIncome(2023);
   // await riskCalculationService.calculateByYearTotalIncome(2024);
+
+  console.timeEnd('executionTime');
 
   /*const parser = new JSONToMongoParser('corruption', 'declarations');
 
