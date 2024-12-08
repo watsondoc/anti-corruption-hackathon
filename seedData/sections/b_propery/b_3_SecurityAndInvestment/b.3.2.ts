@@ -10,7 +10,7 @@ export interface b_3_2_DeclarantThirdPartyInvestments {
 }
 
 export const parseDeclarantThirdPartyInvestments = (
-    rows: any[]
+    rows: string[][]
 ): b_3_2_DeclarantThirdPartyInvestments[] => {
     return rows.map((row) => ({
         numbering: parseInt(row[0], 10) || null,

@@ -12,7 +12,7 @@ export interface b_3_1_EquitySecuritiesAndInvestmentsRow {
 }
 
 export const parseEquitySecuritiesAndInvestmentsRows = (
-  rows: any[]
+  rows: string[][]
 ): b_3_1_EquitySecuritiesAndInvestmentsRow[] => {
   return rows.map((row) => ({
     numbering: parseInt(row[0], 10) || null,

@@ -18,11 +18,14 @@ import { b_5_1_ValuableProperty, parseValuableProperties, b_5_2_DeclarantValuabl
 import { b_6_1_BankAccountBalance, b_6_2_ThirdPartyBankAccountBalance, b_6_3_ElectronicAccountCrypto, b_6_4_ThirdPartyElectronicAccountCrypto, b_6_5_CashHoldings, b_6_6_CashHoldingsThirdParty, parseBankAccountBalances, parseCashHoldings, parseCashHoldingsThirdParty, parseElectronicAccountsAndCrypto, parseThirdPartyBankAccountBalances, parseThirdPartyElectronicAccountsAndCrypto } from "../../seedData/sections/b_propery/b_6_FinancialMeans";
 import { parseLoanAndCreditBalance, parseReportingPeriodIncome } from "../../seedData/sections/c_income/c_1_Revenues";
 
-export function parseDetails(details: Declaration): DeclarationDefails {
+
+type logFunc = (message: string, ...params: any[]) => void;
+
+export function parseDetails(details: Declaration, logMessage: logFunc): DeclarationDefails {
     const result: DeclarationDefails = {
-        generals: parseGeneral(details.content[0]),
-        properties: parseProperty(details.content[1]),
-        incomes: parseIncome(details.content[2]),
+        generals: parseGeneral(details.content[0], logMessage),
+        properties: parseProperty(details.content[1], logMessage),
+        incomes: parseIncome(details.content[2], logMessage),
         interests: null,
         expenses: null
     }
@@ -30,7 +33,7 @@ export function parseDetails(details: Declaration): DeclarationDefails {
     return result;
 }
 
-function parseGeneral(general: Content): A_GeneralSection {
+function parseGeneral(general: Content, logMessage: logFunc): A_GeneralSection {
     const grids = general.grids;
 
     const profileGrid = grids.find(grid => grid.category === DeclarationCategory.a_Profile);
@@ -55,7 +58,7 @@ function parseGeneral(general: Content): A_GeneralSection {
     }
 }
 
-function parseProperty(property: Content): B_PropertySection {
+function parseProperty(property: Content, logMessage: logFunc): B_PropertySection {
     const grids = property.grids;
 
     // b_1
@@ -63,24 +66,32 @@ function parseProperty(property: Content): B_PropertySection {
 
     // b_1_1
     const realEstateTable = realEstateGrid?.rows[0]?.cells[0]?.value as ValueClass;
-    const b_1_1_realEstates: b_1_1_RealEstateRow[] = parseRealEstateRows(realEstateTable.rows);
+    const [b_1_1_realEstates, b_1_1_parsingIssues] = parseRealEstateRows(realEstateTable);
+
+    if (b_1_1_parsingIssues.remainingHeaders.length > 0) {
+        logMessage("b_1_1_parsingIssues ", b_1_1_parsingIssues);
+    }
 
     // b_1_2
     const declarantRealEstateTable = realEstateGrid?.rows[1]?.cells[0]?.value as ValueClass;
-    const b_1_2_declarantRealEstates: b_1_2_DeclarantRealEstateRow[] = declarantRealEstateTable?.rows ? parseDeclarantRealEstateRows(declarantRealEstateTable.rows) : [];
-
+    const [b_1_2_declarantRealEstates, b_1_2_declarantRealEstates_parsingIssues] = parseDeclarantRealEstateRows(declarantRealEstateTable);
+    if (b_1_2_declarantRealEstates_parsingIssues.remainingHeaders.length > 0) {
+        logMessage("b_1_2_declarantRealEstates_parsingIssues ", b_1_2_declarantRealEstates_parsingIssues);
+    }
 
     // b_2
     const vehicleGrid = grids.find(grid => grid.category === DeclarationCategory.b_2_Vehicle);
 
     // b_2_1
     const vehicleTable = vehicleGrid?.rows[0]?.cells[0]?.value as ValueClass;
-    const b_2_1_transports: b_2_1_TransportRow[] = vehicleTable?.rows ? parseTransportRows(vehicleTable.rows) : [];
+    const [b_2_1_transports, b_2_1_transports_parsingIssues] = parseTransportRows(vehicleTable);
+    if (b_2_1_transports_parsingIssues.remainingHeaders.length > 0) {
+        logMessage("b_2_1_transports_parsingIssues ", b_2_1_transports_parsingIssues);
+    }
 
     // b_2_2
     const declarantVehicleTable = vehicleGrid?.rows[1]?.cells[0]?.value as ValueClass;
     const b_2_2_declarantVehicles: b_2_2_DeclarantVehicle[] = declarantVehicleTable?.rows ? parseDeclarantVehicles(declarantVehicleTable.rows) : [];
-
 
     // b_3
     const securitiesAndInvestmentsGrid = grids.find(grid => grid.category === DeclarationCategory.b_3_SecurityAndInvestment);
@@ -162,31 +173,31 @@ function parseProperty(property: Content): B_PropertySection {
     // const propertyAdditionalInformationGrid = grids.find(grid => grid.category === DeclarationCategory.b_7_PropertyAdditionalInformation);
 
     return {
-        b_1_realEstate:{
+        b_1_realEstate: {
             b_1_1_realEstates,
             b_1_2_declarantRealEstates
         },
-        b_2_vehicle:{
+        b_2_vehicle: {
             b_2_1_transports,
             b_2_2_declarantVehicles
         },
-        b_3_securities:{
+        b_3_securities: {
             b_3_1_equitySecuritiesAndInvestments,
             b_3_2_declarantThirdPartyInvestments,
             b_3_3_declarantDebtSecurities,
             b_3_4_declarantDebtSecuritiesThirdParty
         },
-        b_4_loansAndDeposits:{
+        b_4_loansAndDeposits: {
             b_4_1_loans,
             b_4_2_declarantThirdPartyLoans,
             b_4_3_bankDeposits,
             b_4_4_declarantThirdPartyDeposits
         },
-        b_5_expensiveProperty:{
+        b_5_expensiveProperty: {
             b_5_1_valuableProperties,
             b_5_2_declarantValuableProperties
         },
-        b_6_financialMeans:{
+        b_6_financialMeans: {
             b_6_1_bankAccountBalances,
             b_6_2_thirdPartyBankAccountBalances,
             b_6_3_electronicAccountCrypto,
@@ -197,7 +208,7 @@ function parseProperty(property: Content): B_PropertySection {
     }
 }
 
-function parseIncome(income: Content): C_IncomeSection {
+function parseIncome(income: Content, logMessage: logFunc): C_IncomeSection {
     const grids = income.grids;
 
     // c_1
@@ -216,7 +227,7 @@ function parseIncome(income: Content): C_IncomeSection {
     const c_2_incomeAdditionalInformationJson = JSON.stringify(incomeAdditionalInformationGrid?.rows);
 
     return {
-        c_1_revenues:{
+        c_1_revenues: {
             c_1_1_reportingPeriodIncomes,
             c_1_2_loanAndCreditBalances
         },

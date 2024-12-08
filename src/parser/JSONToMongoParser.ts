@@ -65,19 +65,23 @@ export class JSONToMongoParser {
       const collection = db.collection(this.collectionName);
 
       return new Promise((resolve, reject) => {
+        const fstream = fs.createReadStream(jsonFilePath);
         const pipeline = chain([
-          fs.createReadStream(jsonFilePath),
+          fstream,
           parser(),
           streamArray()
         ]);
 
-        let count = 0;
-
         pipeline.on('data', async (data: { key: number; value: any }) => {
           const item = data.value; // Parsed JSON object
+
+          const logMessage = (message: string, ...params: any[]) => {
+            console.log(`[${item.id}] ${message}`, ...params);
+          }
+
           const declarant = generalMap.get(item.id);
 
-          const details = parseDetails(item);
+          const details = parseDetails(item, logMessage);
 
           const declaration: Declaration = {
             id: item.id,
@@ -99,9 +103,10 @@ export class JSONToMongoParser {
 
           // fs.writeFileSync(path.join(__dirname, `${count++}.json`), JSON.stringify(declaration, null, 2));
 
-          count++;
-          if (count > 2000) {
-            pipeline.end();
+          if (declarations.length > 500) {
+            // pipeline.end();
+            fstream.close();
+            // resolve();
             return;
           }
 
@@ -119,7 +124,9 @@ export class JSONToMongoParser {
         pipeline.on('end', async () => {
           console.log('Finished processing file');
           // await collection.drop();
-          await collection.insertMany(declarations);
+          // await collection.insertMany(declarations);
+
+          fs.writeFileSync('declarations.json', JSON.stringify(declarations, null, 2));
 
           client.close();
           resolve();
