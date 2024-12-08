@@ -11,7 +11,7 @@
             "runtimeExecutable": "npm",
             "runtimeArgs": [
                 "run",
-                "start-ts",
+                "start-debug",
             ],
             "skipFiles": [
                 "<node_internals>/**"
