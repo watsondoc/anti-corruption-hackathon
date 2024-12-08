@@ -12,7 +12,11 @@ export type ParsingIssues = {
     remainingHeaders: string[];
 }
 
-export function fillRows<T>(targetToRealColumnNames: TargetToRealColumnNames, vc: ValueClass): FillRowsResult<T> {
+export function fillRows<T>(targetToRealColumnNames: TargetToRealColumnNames, vc?: ValueClass): FillRowsResult<T> {
+
+    if (!vc) {
+        return [[], { incorrectHeaderAssumptions: {}, remainingHeaders: [] }];
+    }
 
     const parsingIssues: ParsingIssues = {
         incorrectHeaderAssumptions: {},
