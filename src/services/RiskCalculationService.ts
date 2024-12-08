@@ -2,6 +2,11 @@ import { client } from '../db/mongoClient';
 import { Db, ObjectId } from 'mongodb';
 import { Declaration } from '../../interfaces/Declaration';
 
+const currencyExchange: any = {
+  '$': 400,
+  '€': 425,
+}
+
 class RiskCalculationService {
   private dbName: string = "corruption";
   private collectionName: string = "declarations";
@@ -69,12 +74,24 @@ class RiskCalculationService {
         QPDRI_D = 2 * ( 1 -  1 / (1 + Math.exp(10 * (x - 1) ) ) );
       }
 
-      item.risk = {
-        QPDRI: {
-          QPDRI: QPDRI,
-          QPDRI_D: QPDRI_D,
-          q: q,
-          VEavg: VEavg,
+      if (item.risk) {
+        item.risk = {
+          ...item.risk,
+          QPDRI: {
+            QPDRI: QPDRI,
+            QPDRI_D: QPDRI_D,
+            q: q,
+            VEavg: VEavg,
+          }
+        }
+      } else {
+        item.risk = {
+          QPDRI: {
+            QPDRI: QPDRI,
+            QPDRI_D: QPDRI_D,
+            q: q,
+            VEavg: VEavg,
+          }
         }
       }
 
@@ -89,21 +106,99 @@ class RiskCalculationService {
     return q;
   }
 
-/*  public async calculateByYearTotalIncome(year: number) {
+  public async calculateByYearAbrTRI(year: number) {
     const collection = this.db.collection(this.collectionName);
 
     const filter = { year: year };
 
-    const items: Declaration[] = await collection.find<Declaration>(filter).limit(1000).toArray();
+    const items: Declaration[] = await collection.find<Declaration>(filter).toArray();
 
+    let AbrTRI = 0;
     for (const item of items) {
       const incomeArray = item.c_incomes.c_1_revenues.c_1_1_reportingPeriodIncomes;
 
       for (const income of incomeArray) {
-        if ()
+        const address = (income.payerAddress || "").toLowerCase();
+
+        if (!address.includes('Հայաս'.toLowerCase()) && address != 'Պաշտպանված'.toLowerCase()) {
+          AbrTRI = 1;
+        }
       }
+
+      if (item.risk) {
+        item.risk = {
+          ...item.risk,
+          AbrTRI: {
+            AbrTRI: AbrTRI
+          }
+        }
+      } else {
+        item.risk = {
+          AbrTRI: {
+            AbrTRI: AbrTRI,
+          }
+        }
+      }
+
+      await collection.updateOne(
+        { id: item.id }, // Filter by _id
+        { $set: item } // Update the document
+      );
     }
-  }*/
+  }
+
+  public async calculateByYearTotalIncome(year: number) {
+    const collection = this.db.collection(this.collectionName);
+
+    const filter = { year: year };
+
+    const items: Declaration[] = await collection.find<Declaration>(filter).toArray();
+
+    for (const item of items) {
+      const incomeAgg: any = {};
+      const incomeArray = item.c_incomes.c_1_revenues.c_1_1_reportingPeriodIncomes;
+
+      for (const income of incomeArray) {
+        const money = income.relationshipNature;
+        const type = income.incomeType;
+
+        if (money === '' || type === '') {
+          continue;
+        }
+
+        let moneyIncome: any = [];
+        try {
+          moneyIncome = this.parseMonetaryField(money);
+        } catch(ex: any) {
+          continue;
+        }
+
+
+        let amountMoney = moneyIncome[1];
+        if (currencyExchange[moneyIncome[0]]) {
+          amountMoney = amountMoney * currencyExchange[moneyIncome[0]];
+        }
+        incomeAgg[type] = (incomeAgg[type] || 0) + amountMoney;
+
+        console.log(incomeAgg);
+      }
+
+      item.incomeAgg = {
+        ...incomeAgg,
+      }
+
+      await collection.updateOne(
+        { id: item.id }, // Filter by _id
+        { $set: item } // Update the document
+      );
+    }
+  }
+
+  private parseMonetaryField(money: string) {
+    const moneyArr = money.split(" ");
+    const parsedNumber = parseInt(moneyArr[1].replace(/,/g, ""), 10)
+    return [moneyArr[0], parsedNumber];
+  }
 }
 
 export const riskCalculationService = new RiskCalculationService();

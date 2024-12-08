@@ -40,5 +40,12 @@
     "weight": 3,
     "defaultWeight": 3,
     "description": "Savings held in cash or cryptocurrency are more risky, as their source of origin and subsequent realization are uncontrollable, and their real existence is not subject to verification, as a result of which declarants can declare savings that do not actually exist, with which they will later justify their gains."
+  },
+  {
+    "id": "AbrTRI",
+    "title": "Signing transactions of alienation of individuals/registered organizations residing abroad",
+    "weight": 1,
+    "defaultWeight": 1,
+    "description": "Transactions of alienation of all types of property, where the address of the other party to the transaction is located abroad."
   }
 ]

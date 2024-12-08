@@ -30,6 +30,7 @@ export interface Declaration {
     type: string;
     year: number;
     risk?: any; // key: value;
+    incomeAgg?: any;
     a_generals: A_GeneralSection;
     b_properties: B_PropertySection;
     c_incomes: C_IncomeSection;
