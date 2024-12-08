@@ -18,6 +18,7 @@ import { b_6_1_BankAccountBalance, b_6_2_ThirdPartyBankAccountBalance, b_6_3_Ele
 import { c_1_1_ReportingPeriodIncome, c_1_2_LoanAndCreditBalance } from "../seedData/sections/c_income/c_1_Revenues";
 
 export interface Declaration {
+    _id?: string;
     id: string;
     name: string;
     declarant: string;
@@ -28,6 +29,7 @@ export interface Declaration {
     submissionDate: string;
     type: string;
     year: number;
+    risk?: any; // key: value;
     a_generals: A_GeneralSection;
     b_properties: B_PropertySection;
     c_incomes: C_IncomeSection;

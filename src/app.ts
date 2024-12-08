@@ -6,6 +6,7 @@ import { connectToDatabase } from "./db/mongoClient";
 import { JSONToMongoParser } from './parser/JSONToMongoParser';
 import * as path from 'path';
 import { weightsService } from './services/WeightsService';
+import { riskCalculationService } from './services/RiskCalculationService';
 
 dotenv.config();
 
@@ -21,15 +22,15 @@ app.use("/api/weights", weightRoutes);
 const startServer = async () => {
   await connectToDatabase();
 
-  // const weightsSeeder = new WeightsService('corruption', 'weights');
-  // await weightsSeeder.generateWeights();
+  await riskCalculationService.calculateByYearQPDRI(2024);
+  // await weightsService.generateWeights();
 
-  const parser = new JSONToMongoParser('corruption', 'declarations');
+  /*const parser = new JSONToMongoParser('corruption', 'declarations');
 
   await parser.loadDeclarations(
     path.resolve(__dirname, '../seedData/general_2024.json'),
     path.resolve(__dirname, '../seedData/details_2024.json'),
-  );
+  );*/
 
   app.listen(port, () => {
     console.log(`Server running on http://localhost:${port}`);
